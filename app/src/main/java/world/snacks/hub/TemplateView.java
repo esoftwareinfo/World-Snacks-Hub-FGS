@@ -184,24 +184,39 @@ public class TemplateView extends FrameLayout {
         }
 
 
-        if (SharePref.getBGColor(mContext).length()>=9) {
+//        if (SharePref.getNative_custom(mContext).equals("2")) {
 
+        if (SharePref.getBGColor(mContext).length() >= 9) {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     card_main_background.setElevation(0.0f);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
+        }
+//        }
 
+
+        try {
+
+//        background.setBackgroundColor(Color.parseColor(SharePref.getBGColor(mContext)));
+
+            card_main_background.setCardBackgroundColor(Color.parseColor(SharePref.getBGColor(mContext)));
+
+        } catch (Exception E) {
 
         }
 
-        background.setBackgroundColor(Color.parseColor(SharePref.getBGColor(mContext)));
+
+        try {
+            primaryView.setBackgroundColor(Color.parseColor(SharePref.getBGColor(mContext)));
+            primaryView.setTextColor(Color.parseColor(SharePref.getTitleTextColor(mContext)));
 
 
-        primaryView.setBackgroundColor(Color.parseColor(SharePref.getBGColor(mContext)));
-        primaryView.setTextColor(Color.parseColor(SharePref.getTitleTextColor(mContext)));
+        } catch (Exception e) {
+
+        }
 
 
         try {
@@ -211,29 +226,39 @@ public class TemplateView extends FrameLayout {
 
         }
 
-        secondaryView.setTextColor(Color.parseColor(SharePref.getDescriptionTextColor(mContext)));
 
-        ad_notification_view.setTextColor(Color.parseColor(SharePref.getButtonColor(mContext)));
+        try {
+            secondaryView.setTextColor(Color.parseColor(SharePref.getDescriptionTextColor(mContext)));
 
-        GradientDrawable border = new GradientDrawable();
-        border.setColor(Color.TRANSPARENT);
-        border.setStroke(3, Color.parseColor(SharePref.getButtonColor(mContext))); //black border with full opacity
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-            ad_notification_view.setBackgroundDrawable(border);
-        } else {
-            ad_notification_view.setBackground(border);
-        }
+            ad_notification_view.setTextColor(Color.parseColor(SharePref.getButtonColor(mContext)));
 
-        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            stars.getDrawable(2).setTint(Color.parseColor(SharePref.getButtonColor(mContext)));
-        } else {
-            stars.getDrawable(2).setColorFilter(Color.parseColor(SharePref.getButtonColor(mContext)), PorterDuff.Mode.SRC_ATOP);
+        } catch (Exception e) {
+
         }
 
 
+        try {
+            GradientDrawable border = new GradientDrawable();
+            border.setColor(Color.TRANSPARENT);
+            border.setStroke(3, Color.parseColor(SharePref.getButtonColor(mContext))); //black border with full opacity
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                ad_notification_view.setBackgroundDrawable(border);
+            } else {
+                ad_notification_view.setBackground(border);
+            }
 
-        if (SharePref.getNative_custom(mContext).equals("2")){
+            LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                stars.getDrawable(2).setTint(Color.parseColor(SharePref.getButtonColor(mContext)));
+            } else {
+                stars.getDrawable(2).setColorFilter(Color.parseColor(SharePref.getButtonColor(mContext)), PorterDuff.Mode.SRC_ATOP);
+            }
+        } catch (Exception e) {
+
+        }
+
+
+        if (SharePref.getNative_custom(mContext).equals("2")) {
 
 //            Animation shake = AnimationUtils.loadAnimation(mContext, R.anim.adanim);
 //
@@ -245,10 +270,9 @@ public class TemplateView extends FrameLayout {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     cardad.setElevation(0.0f);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
-
 
 
             ObjectAnimator scaleX = ObjectAnimator.ofFloat(callToActionView, "scaleX", 0.9f, 1.1f);
@@ -267,10 +291,14 @@ public class TemplateView extends FrameLayout {
             scaleAnim.start();
         }
 
+        try {
+            callToActionView.setBackgroundColor(Color.parseColor(SharePref.getButtonColor(mContext)));
+            callToActionView.setTextColor(Color.parseColor(SharePref.getButtonTextColor(mContext)));
 
+        } catch (Exception e) {
 
-        callToActionView.setBackgroundColor(Color.parseColor(SharePref.getButtonColor(mContext)));
-        callToActionView.setTextColor(Color.parseColor(SharePref.getButtonTextColor(mContext)));
+        }
+
 
         invalidate();
         requestLayout();
@@ -371,7 +399,7 @@ public class TemplateView extends FrameLayout {
 
         try {
 
-            if(SharePref.getNative_custom(mContext).equals("1") || SharePref.getNative_custom(mContext).equals("2")){
+            if (SharePref.getNative_custom(mContext).equals("1") || SharePref.getNative_custom(mContext).equals("2")) {
 
                 if (Native_Ad_Size == 2) {
 
@@ -395,7 +423,7 @@ public class TemplateView extends FrameLayout {
 
                 }
 
-            }else{
+            } else {
 
                 if (Native_Ad_Size == 2) {
 
@@ -421,9 +449,6 @@ public class TemplateView extends FrameLayout {
 
 
             }
-
-
-
 
 
         } finally {

@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+
+
 public class CustomProgressDialogue extends Dialog {
     public CustomProgressDialogue(Context context, String title, String description) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);

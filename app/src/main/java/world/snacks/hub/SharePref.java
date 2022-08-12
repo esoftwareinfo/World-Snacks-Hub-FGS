@@ -19,6 +19,21 @@ public class SharePref {
     }
 
 
+    private static final String First_ads_splesh = "First_ads_splesh";
+
+
+    public static void setFirst_ads_splesh(Context Context, int string) {
+        Context.getSharedPreferences(Context.getPackageName(), 0).edit()
+                .putInt(First_ads_splesh, string).commit();
+    }
+
+    public static int getFirst_ads_splesh(Context Context) {
+        return Context.getSharedPreferences(Context.getPackageName(), 0)
+                .getInt(First_ads_splesh, 0);
+    }
+
+
+
     private static final String show_ads = "show_ads";
 
 

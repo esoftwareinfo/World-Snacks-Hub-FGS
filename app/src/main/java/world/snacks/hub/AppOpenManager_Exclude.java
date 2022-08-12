@@ -50,7 +50,13 @@ public class AppOpenManager_Exclude implements Application.ActivityLifecycleCall
 
 
         } else {
-            showAdIfAvailable();
+
+            if (Check == 0) {
+                showAdIfAvailable();
+            }else{
+                Check = 0;
+            }
+
         }
     }
 
