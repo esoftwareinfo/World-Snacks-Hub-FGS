@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,17 +36,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.adcolony.sdk.AdColony;
-import com.adcolony.sdk.AdColonyAdOptions;
-import com.adcolony.sdk.AdColonyAdSize;
-import com.adcolony.sdk.AdColonyAdView;
-import com.adcolony.sdk.AdColonyAdViewListener;
-import com.adcolony.sdk.AdColonyAppOptions;
-import com.adcolony.sdk.AdColonyInterstitial;
-import com.adcolony.sdk.AdColonyInterstitialListener;
-import com.adcolony.sdk.AdColonyReward;
-import com.adcolony.sdk.AdColonyRewardListener;
-import com.adcolony.sdk.AdColonyZone;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdSettings;
@@ -80,6 +70,12 @@ import com.tappx.sdk.android.TappxBanner;
 import com.tappx.sdk.android.TappxBannerListener;
 import com.tappx.sdk.android.TappxInterstitial;
 import com.tappx.sdk.android.TappxInterstitialListener;
+import com.vungle.warren.AdConfig;
+import com.vungle.warren.InitCallback;
+import com.vungle.warren.LoadAdCallback;
+import com.vungle.warren.PlayAdCallback;
+import com.vungle.warren.Vungle;
+import com.vungle.warren.error.VungleException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -280,7 +276,7 @@ public class Pizza {
     public static String Extra5 = "0";
 
 
-    public Pizza(Context context, String App_Name1, String Ads_Link1, String Package, int show_ads1, int FB_setup_ads1, String GL_setup_ads1, int splesh_ads1, int increase_ads1, String Extra_Uses,
+    public Pizza(Context context, String App_Name1, String Ads_Link1, String Package, int show_ads1, int FB_setup_ads1, String GL_setup_ads1, int splesh_ads1, int increase_ads1, String splash_anim1,
                  String FB_Banner11, String FB_Banner22, String FB_Banner33, String FB_Banner44, String FB_Banner55,
                  String FB_MR11, String FB_MR22, String FB_MR33, String FB_MR44, String FB_MR55,
                  String FB_Inter11, String FB_Inter22, String FB_Inter33, String FB_Inter44, String FB_Inter55,
@@ -417,12 +413,15 @@ public class Pizza {
 
         Splesh_AO = 0;
 
+        splash_anim = splash_anim1;
+
 
         if (SharePref.getFirst_ads(mContext) == 0) {
 
             SharePref.setShow_Ads(mContext, show_ads);
             SharePref.setExit_Pop(mContext, "0");
             SharePref.setSplesh_AO(mContext, 0);
+            SharePref.setsplash_anim(mContext, splash_anim);
             SharePref.setNative_custom(mContext, "0");
             SharePref.setCounter_Ads_Setup(mContext, 3);
             SharePref.setAO_Setup(mContext, 1);
@@ -874,16 +873,38 @@ public class Pizza {
                     fb_native_id_count = FB_setup_ads;
                     fb_nativesmalll_id_count = FB_setup_ads;
 
+                    fb_banner_id_count_pre = FB_setup_ads;
+
+
+                    fb_native_id_count_Pre = FB_setup_ads;
+                    fb_nativesmalll_id_count_Pre = FB_setup_ads;
+
+
                     if (Admob_App_ID.equals("ca-app-pub-3940256099942544~3347511713")) {
                         MobileAds.initialize(mContext);
 
                     } else {
                         MobileAds.initialize(mContext, Admob_App_ID);
                     }
-                    AdColonyAppOptions appOptions;
-                    appOptions = new AdColonyAppOptions();
-                    appOptions.setKeepScreenOn(true);
-                    AdColony.configure((Activity) mContext, appOptions, ac_App);
+
+                    Vungle.init(ac_App, mContext.getApplicationContext(), new InitCallback() {
+                        @Override
+                        public void onSuccess() {
+                            MyLog.e("Vungle.init onSuccess", "init");
+
+                        }
+
+                        @Override
+                        public void onError(VungleException exception) {
+
+                            MyLog.e("Vungle.init exception", "init= " + exception.toString());
+                        }
+
+                        @Override
+                        public void onAutoCacheAdAvailable(String placementId) {
+                        }
+                    });
+
 
                     AudienceNetworkAds.initialize(mContext);
                     boolean App_Live_Or_Not = isAppLiveOnPlayStore(mContext.getPackageName());
@@ -897,11 +918,13 @@ public class Pizza {
 
                 } catch (final JSONException e) {
 
+
+                    error(e.getMessage());
+
                     boolean App_Live_Or_Not = isAppLiveOnPlayStore(mContext.getPackageName());
                     if (!App_Live_Or_Not) {
                         Ads_Seq = SharePref.getAds_Seq2(mContext);
                     }
-                    error(e.getMessage());
 
                 }
             } else {
@@ -1063,6 +1086,12 @@ public class Pizza {
             fb_native_id_count = FB_setup_ads;
             fb_nativesmalll_id_count = FB_setup_ads;
 
+            fb_banner_id_count_pre = FB_setup_ads;
+
+            fb_native_id_count_Pre = FB_setup_ads;
+            fb_nativesmalll_id_count_Pre = FB_setup_ads;
+
+
             BGColor1 = SharePref.getBGColor(mContext);
             TitleTextColor1 = SharePref.getTitleTextColor(mContext);
             DescriptionTextColor1 = SharePref.getDescriptionTextColor(mContext);
@@ -1107,10 +1136,23 @@ public class Pizza {
                 MobileAds.initialize(mContext, Admob_App_ID);
             }
 
-            AdColonyAppOptions appOptions;
-            appOptions = new AdColonyAppOptions();
-            appOptions.setKeepScreenOn(true);
-            AdColony.configure((Activity) mContext, appOptions, ac_App);
+            Vungle.init(ac_App, mContext.getApplicationContext(), new InitCallback() {
+                @Override
+                public void onSuccess() {
+                    MyLog.e("Vungle.init onSuccess", "init");
+
+                }
+
+                @Override
+                public void onError(VungleException exception) {
+
+                    MyLog.e("Vungle.initexception", "init= " + exception.toString());
+                }
+
+                @Override
+                public void onAutoCacheAdAvailable(String placementId) {
+                }
+            });
 
             AudienceNetworkAds.initialize(mContext);
 
@@ -1520,7 +1562,7 @@ public class Pizza {
                 public void run() {
                     try {
                         if (Loading_Data == 1 || Loading_Data == 0) {
-                            //AdSettings.setTestMode(true);
+                            // AdSettings.setTestMode(true);
                             if (show_ads == 0) {
                                 if (builder.isShowing()) {
                                     builder.dismiss();
@@ -2090,19 +2132,74 @@ public class Pizza {
     public static void Splash_Interstial_AC(Dialog builder, Context cont_ads) {
 
 
-        AdColonyAdOptions adOptions = new AdColonyAdOptions();
-        AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
+        AdConfig adConfig = new AdConfig();
+        adConfig.setAdOrientation(AdConfig.AUTO_ROTATE);
+        adConfig.setMuted(false);
+
+
+        PlayAdCallback vunglePlayAdCallback = new PlayAdCallback() {
             @Override
-            public void onRequestFilled(AdColonyInterstitial ad) {
+            public void creativeId(String creativeId) {
+            }
+
+            @Override
+            public void onAdStart(String placementId) {
+            }
+
+            @Override
+            public void onAdEnd(String placementId, boolean completed, boolean isCTAClicked) {
+            }
+
+            @Override
+            public void onAdEnd(String placementId) {
+
+            }
+
+            @Override
+            public void onAdClick(String placementId) {
+            }
+
+            @Override
+            public void onAdRewarded(String placementId) {
+            }
+
+            @Override
+            public void onAdLeftApplication(String placementId) {
+            }
+
+            @Override
+            public void onError(String placementId, VungleException exception) {
+
+            }
+
+            @Override
+            public void onAdViewed(String placementId) {
+            }
+        };
+
+
+        Vungle.loadAd(ac_Inter, new LoadAdCallback() {
+            @Override
+            public void onAdLoad(String placementReferenceId) {
+
+
+                try {
+                    handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+
+                } catch (Exception e) {
+                }
+
                 try {
 
-                    handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+
                     if (Splesh_Timer) {
 
                     } else {
 
                         try {
-                            ad.show();
+                            if (Vungle.canPlayAd(ac_Inter)) {
+                                Vungle.playAd(ac_Inter, adConfig, vunglePlayAdCallback);
+                            }
                         } catch (Exception e) {
 
                         }
@@ -2135,21 +2232,18 @@ public class Pizza {
             }
 
             @Override
-            public void onRequestNotFilled(AdColonyZone zone) {
+            public void onError(String placementReferenceId, VungleException exception) {
+
+                MyLog.e(" Vungle s i onError", "" + exception.getMessage());
+
+
                 Splash_Interstial_Tappx(builder, cont_ads);
 
-            }
-
-            @Override
-            public void onOpened(AdColonyInterstitial ad) {
-            }
-
-            @Override
-            public void onExpiring(AdColonyInterstitial ad) {
 
             }
-        };
-        AdColony.requestInterstitial(ac_Inter, listener, adOptions);
+        });
+
+
     }
 
     public static void Splash_Interstial_Tappx(final Dialog builder, final Context cont_ads) {
@@ -2780,54 +2874,116 @@ public class Pizza {
 
         ac_dialog111.show();
 
-        AdColonyAdOptions adOptions = new AdColonyAdOptions();
-        AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
+
+        AdConfig adConfig = new AdConfig();
+        adConfig.setAdOrientation(AdConfig.AUTO_ROTATE);
+        adConfig.setMuted(false);
+
+
+        PlayAdCallback vunglePlayAdCallback = new PlayAdCallback() {
             @Override
-            public void onRequestFilled(AdColonyInterstitial ad) {
+            public void creativeId(String creativeId) {
+            }
 
+            @Override
+            public void onAdStart(String placementId) {
+            }
+
+            @Override
+            public void onAdEnd(String placementId, boolean completed, boolean isCTAClicked) {
+            }
+
+            @Override
+            public void onAdEnd(String placementId) {
+
+            }
+
+            @Override
+            public void onAdClick(String placementId) {
+            }
+
+            @Override
+            public void onAdRewarded(String placementId) {
+            }
+
+            @Override
+            public void onAdLeftApplication(String placementId) {
+            }
+
+            @Override
+            public void onError(String placementId, VungleException exception) {
                 try {
-                    ad.show();
 
-                } catch (Exception e) {
+                    if (ac_dialog111 != null) {
+                        if (ac_dialog111.isShowing()) {
+                            ac_dialog111.dismiss();
 
-                }
-
-                try {
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (ac_dialog111 != null) {
-                                if (ac_dialog111.isShowing()) {
-                                    ac_dialog111.dismiss();
-                                }
-                            }
                         }
-                    }, 500);
+                    }
 
                 } catch (Exception e) {
 
                 }
-
             }
 
             @Override
-            public void onRequestNotFilled(AdColonyZone zone) {
-
-                Interstial_Show_Tappx_After_AC(cont_ads, ac_dialog111);
-            }
-
-            @Override
-            public void onOpened(AdColonyInterstitial ad) {
-            }
-
-            @Override
-            public void onExpiring(AdColonyInterstitial ad) {
-
+            public void onAdViewed(String placementId) {
             }
         };
 
-        AdColony.requestInterstitial(ac_Inter, listener, adOptions);
+
+        Vungle.loadAd(ac_Inter, new LoadAdCallback() {
+            @Override
+            public void onAdLoad(String placementReferenceId) {
+
+
+                try {
+                    handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+
+                } catch (Exception e) {
+                }
+
+                try {
+
+
+                    try {
+                        if (Vungle.canPlayAd(ac_Inter)) {
+                            Vungle.playAd(ac_Inter, adConfig, vunglePlayAdCallback);
+                        }
+                    } catch (Exception e) {
+
+                    }
+                    try {
+
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (ac_dialog111 != null) {
+                                    if (ac_dialog111.isShowing()) {
+                                        ac_dialog111.dismiss();
+
+                                    }
+                                }
+                            }
+                        }, 500);
+                    } catch (Exception e) {
+
+                    }
+
+
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onError(String placementReferenceId, VungleException exception) {
+
+                Interstial_Show_Tappx_After_AC(cont_ads, ac_dialog111);
+            }
+        });
 
 
     }
@@ -3287,69 +3443,7 @@ public class Pizza {
     public void Banner_AC(Context cont_ads, RelativeLayout adView, int bannerType) {
 
 
-        AdColonyAdOptions adOptions = new AdColonyAdOptions();
-        AdColonyAdViewListener listener = new AdColonyAdViewListener() {
-            @Override
-            public void onRequestFilled(AdColonyAdView adColonyAdView) {
-                MyLog.e("AC banner Load", "yes");
-                try {
-                    if (exit_gifImageView != null) {
-                        exit_gifImageView.setVisibility(View.GONE);
-                    }
-                } catch (Exception e) {
-
-                }
-
-                try {
-                    adView.removeAllViews();
-                    adView.setVisibility(View.VISIBLE);
-                    adView.addView(adColonyAdView);
-                } catch (Exception E) {
-
-                }
-
-            }
-
-            @Override
-            public void onRequestNotFilled(AdColonyZone zone) {
-                super.onRequestNotFilled(zone);
-                MyLog.e("AC b Native Load", "fail");
-
-                adView.setVisibility(View.GONE);
-                Banner_Tappx(cont_ads, adView, bannerType);
-            }
-
-            @Override
-            public void onOpened(AdColonyAdView ad) {
-                super.onOpened(ad);
-
-            }
-
-            @Override
-            public void onClosed(AdColonyAdView ad) {
-                super.onClosed(ad);
-
-            }
-
-            @Override
-            public void onClicked(AdColonyAdView ad) {
-                super.onClicked(ad);
-
-            }
-
-            @Override
-            public void onLeftApplication(AdColonyAdView ad) {
-                super.onLeftApplication(ad);
-
-            }
-        };
-        if (bannerType == 2) {
-            AdColony.requestAdView(ac_Banner, listener, AdColonyAdSize.BANNER, adOptions);
-        } else if (bannerType == 3) {
-            AdColony.requestAdView(ac_Banner, listener, AdColonyAdSize.MEDIUM_RECTANGLE, adOptions);
-        } else {
-            AdColony.requestAdView(ac_Banner, listener, AdColonyAdSize.BANNER, adOptions);
-        }
+        Banner_Tappx(cont_ads, adView, bannerType);
 
     }
 
@@ -3646,7 +3740,7 @@ public class Pizza {
                 public void onError(Ad ad, AdError adError) {
 
 
-                    MyLog.e("FB b Native Load", "fail =" + adError);
+                    MyLog.e("FB NB Load", "fail =" + adError);
 
                     int ddd = fb_nativesmalll_id_count - 1;
 
@@ -3681,7 +3775,7 @@ public class Pizza {
                 @Override
                 public void onAdLoaded(Ad ad) {
 
-                    MyLog.e("FB b Native Load", "yes");
+                    MyLog.e("FB NB Load", "yes");
                     NativeAdViewAttributes viewAttributes = new NativeAdViewAttributes()
                             .setBackgroundColor(BGColor)
                             .setTitleTextColor(TitleTextColor)
@@ -3986,25 +4080,6 @@ public class Pizza {
             }
         }
 
-        if (Pre_Loaed_Banner_What_show.equals("AC_Banner")) {
-            if (adColonyAdView_pre != null) {
-
-                try {
-
-                    adView.setVisibility(View.VISIBLE);
-                    adView.removeAllViews();
-                    adView.addView(adColonyAdView_pre);
-                    Pre_Loaed_Banner_What_show = "";
-                    Banner_Pre_Load(cont_ads, Pre_Loaed_Banner_Type);
-                    return;
-
-                } catch (Exception E) {
-
-                }
-
-
-            }
-        }
 
         if (Pre_Loaed_Banner_What_show.equals("TX_Banner")) {
             if (Tappxbanner_pre != null) {
@@ -4033,7 +4108,8 @@ public class Pizza {
     }
 
     AdView Pre_FB_Banner = null;
-    int fb_banner_id_count_pre = 1;
+
+    public static int fb_banner_id_count_pre = 1;
 
     public void Pre_Banner_FB(Context cont_ads, int bannerType) {
 
@@ -4124,8 +4200,8 @@ public class Pizza {
 
             @Override
             public void onAdLoaded(Ad ad) {
-                int aa = fb_banner_id_count - 1;
-                MyLog.e("pre  fb banner Load ", "yes" + aa);
+                int aa = fb_banner_id_count_pre - 1;
+                MyLog.e("pre fb banner Load ", "yes" + aa);
 
                 Pre_Loaed_Banner_What_show = "FB_Banner";
                 fb_banner_id_count_pre = FB_setup_ads;
@@ -4239,63 +4315,9 @@ public class Pizza {
         });
     }
 
-    AdColonyAdView adColonyAdView_pre;
 
     public void Pre_Banner_AC(Context cont_ads, int bannerType) {
-
-        MyLog.e("Pre_Banner_AC", "Pre_Banner_AC");
-
-        AdColonyAdOptions adOptions = new AdColonyAdOptions();
-
-        AdColonyAdViewListener listener = new AdColonyAdViewListener() {
-            @Override
-            public void onRequestFilled(AdColonyAdView adColonyAdView) {
-                adColonyAdView_pre = adColonyAdView;
-                Pre_Loaed_Banner_What_show = "AC_Banner";
-
-            }
-
-            @Override
-            public void onRequestNotFilled(AdColonyZone zone) {
-                super.onRequestNotFilled(zone);
-                adColonyAdView_pre = null;
-
-                Pre_Loaed_Banner_What_show = "";
-                Pre_Banner_Tappx(cont_ads, bannerType);
-            }
-
-            @Override
-            public void onOpened(AdColonyAdView ad) {
-                super.onOpened(ad);
-
-            }
-
-            @Override
-            public void onClosed(AdColonyAdView ad) {
-                super.onClosed(ad);
-
-            }
-
-            @Override
-            public void onClicked(AdColonyAdView ad) {
-                super.onClicked(ad);
-
-            }
-
-            @Override
-            public void onLeftApplication(AdColonyAdView ad) {
-                super.onLeftApplication(ad);
-
-            }
-        };
-        if (bannerType == 2) {
-            AdColony.requestAdView(ac_Banner, listener, AdColonyAdSize.BANNER, adOptions);
-        } else if (bannerType == 3) {
-            AdColony.requestAdView(ac_Banner, listener, AdColonyAdSize.MEDIUM_RECTANGLE, adOptions);
-        } else {
-            AdColony.requestAdView(ac_Banner, listener, AdColonyAdSize.BANNER, adOptions);
-        }
-
+        Pre_Banner_Tappx(cont_ads, bannerType);
     }
 
     TappxBanner Tappxbanner_pre;
@@ -4431,7 +4453,6 @@ public class Pizza {
 
             if (fb_Native_View != null) {
 
-
                 try {
                     adView.setVisibility(View.VISIBLE);
                     adView.removeAllViews();
@@ -4472,23 +4493,6 @@ public class Pizza {
             }
         }
 
-        if (Pre_Loaed_Banner_What_show.equals("AC_Banner")) {
-            if (adColonyAdView_pre != null) {
-
-                try {
-                    adView.setVisibility(View.VISIBLE);
-                    adView.removeAllViews();
-                    adView.addView(adColonyAdView_pre);
-                    Pre_Loaed_Banner_What_show = "";
-                    Native_Pre_Load(cont_ads, Pre_Loaed_Native_Type);
-                    return;
-
-                } catch (Exception E) {
-
-                }
-
-            }
-        }
         if (Pre_Loaed_Banner_What_show.equals("TX_Banner")) {
             if (Tappxbanner_pre != null) {
 
@@ -4527,8 +4531,8 @@ public class Pizza {
     NativeBannerAd mNativeBannerAd_pre;
     NativeAd nativeAd_pre;
     View fb_Native_View = null;
-    int fb_native_id_count_Pre = 1;
-    int fb_nativesmalll_id_count_Pre = 1;
+    public static int fb_native_id_count_Pre = 1;
+    public static int fb_nativesmalll_id_count_Pre = 1;
 
     public void Pre_Native_FB(Context cont_ads, int nativeType) {
 
@@ -4608,7 +4612,7 @@ public class Pizza {
 
                     fb_Native_View = adView1;
 
-                    fb_native_id_count = FB_setup_ads;
+                    fb_native_id_count_Pre = FB_setup_ads;
 
                 }
 
@@ -4787,7 +4791,7 @@ public class Pizza {
                         Native_templateView_pre.setStyles(styles);
                         Native_templateView_pre.setNativeAd(nativeAd);
                         Native_templateView_pre.setVisibility(View.VISIBLE);
-
+                        gogole_native_id_count_pre = 0;
 
                     }
 
@@ -5892,66 +5896,110 @@ public class Pizza {
     public void Reward_AC(Activity cont_ads, OnRewardgetListner onRewardgetListner) {
         MyLog.e("Reward_AC", "Reward_AC");
 
-        if (Ads_Seq2.equals("TX")) {
+        if (Ads_Seq.equals("AC") || Ads_Seq1.equals("AC") || Ads_Seq2.equals("AC")) {
+
+        } else {
             Reward_Tappx(cont_ads, onRewardgetListner);
+
             return;
+
         }
 
 
-        AdColonyAdOptions adOptions = new AdColonyAdOptions();
+        AdConfig adConfig = new AdConfig();
+        adConfig.setAdOrientation(AdConfig.AUTO_ROTATE);
+        adConfig.setMuted(false);
 
-        AdColony.setRewardListener(new AdColonyRewardListener() {
+
+        PlayAdCallback vunglePlayAdCallback = new PlayAdCallback() {
             @Override
-            public void onReward(AdColonyReward reward) {
-                onRewardgetListner.OnReward(true);
-
+            public void creativeId(String creativeId) {
             }
-        });
 
-        AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
             @Override
-            public void onRequestFilled(AdColonyInterstitial ad) {
-                // Ad passed back in request filled callback, ad can now be shown
-                ad.show();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+            public void onAdStart(String placementId) {
+            }
 
-                        if (Rewarded_progressDialog.isShowing()) {
-                            Rewarded_progressDialog.dismiss();
+            @Override
+            public void onAdEnd(String placementId, boolean completed, boolean isCTAClicked) {
+            }
 
-                        }
-
-
-                    }
-
-                }, 1000);
+            @Override
+            public void onAdEnd(String placementId) {
 
             }
 
             @Override
-            public void onRequestNotFilled(AdColonyZone zone) {
-                // Ad request was not filled
+            public void onAdClick(String placementId) {
+            }
 
+            @Override
+            public void onAdRewarded(String placementId) {
+            }
 
-                Reward_Tappx(cont_ads, onRewardgetListner);
+            @Override
+            public void onAdLeftApplication(String placementId) {
+            }
+
+            @Override
+            public void onError(String placementId, VungleException exception) {
 
             }
 
             @Override
-            public void onOpened(AdColonyInterstitial ad) {
-                // Ad opened, reset UI to reflect state change
-
-            }
-
-            @Override
-            public void onExpiring(AdColonyInterstitial ad) {
-
+            public void onAdViewed(String placementId) {
             }
         };
 
-        AdColony.requestInterstitial(Ac_Reward, listener, adOptions);
+
+        Vungle.loadAd(ac_Inter, new LoadAdCallback() {
+            @Override
+            public void onAdLoad(String placementReferenceId) {
+
+                Log.e("Vungle rw", "yes");
+
+                onRewardgetListner.OnReward(true);
+
+                try {
+                    if (Vungle.canPlayAd(ac_Inter)) {
+                        Vungle.playAd(ac_Inter, adConfig, vunglePlayAdCallback);
+                    }
+                } catch (Exception e) {
+
+                }
+
+
+                try {
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (Rewarded_progressDialog.isShowing()) {
+                                Rewarded_progressDialog.dismiss();
+
+                            }
+                        }
+                    }, 1000);
+
+                } catch (Exception e) {
+
+                }
+
+
+            }
+
+            @Override
+            public void onError(String placementReferenceId, VungleException exception) {
+                Log.e("Vungle rw", "fail=" + exception.toString());
+
+
+                Reward_Tappx(cont_ads, onRewardgetListner);
+            }
+        });
+
+
     }
 
     public void Reward_Tappx(Activity cont_ads, OnRewardgetListner onRewardgetListner) {
