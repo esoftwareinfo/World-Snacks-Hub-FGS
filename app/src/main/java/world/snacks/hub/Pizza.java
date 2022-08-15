@@ -1520,7 +1520,7 @@ public class Pizza {
                 public void run() {
                     try {
                         if (Loading_Data == 1 || Loading_Data == 0) {
-                            AdSettings.setTestMode(true);
+                            //AdSettings.setTestMode(true);
                             if (show_ads == 0) {
                                 if (builder.isShowing()) {
                                     builder.dismiss();
