@@ -177,8 +177,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:scaleType="centerCrop"
                     android:padding="50dp"
+                    android:layout_above="@+id/banner22"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/thankyou" />
 
                 <RelativeLayout

@@ -150,14 +150,14 @@
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:scaleType="centerCrop"
+                    android:layout_above="@+id/banner"
                     android:src="@drawable/thankyou" />
 
                 <RelativeLayout
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentBottom="true"
                     android:gravity="center" />
 
             </RelativeLayout>

@@ -34,7 +34,7 @@
                 <com.google.android.gms.ads.nativead.MediaView
                     android:id="@+id/media_view"
                     android:layout_width="match_parent"
-                    android:layout_height="405dp"
+                    android:layout_height="420dp"
                     android:layout_margin="0dp"
                     android:layout_marginTop="0dp"
                     app:layout_constraintBottom_toTopOf="@id/middle"
@@ -253,8 +253,8 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardad"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="10dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     app:cardBackgroundColor="@android:color/transparent"

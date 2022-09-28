@@ -38,7 +38,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
-import com.facebook.ads.AdSettings;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
 import com.facebook.ads.InterstitialAd;
@@ -907,9 +906,9 @@ public class Pizza {
 
 
                     AudienceNetworkAds.initialize(mContext);
-                    boolean App_Live_Or_Not = isAppLiveOnPlayStore(mContext.getPackageName());
+                    boolean App_Live_Or_Not = isAppLiveOnPlayStore(PackageName);
 
-                    MyLog.e(mContext.getPackageName(), "" + App_Live_Or_Not);
+                    MyLog.e(PackageName, "" + App_Live_Or_Not);
                     if (!App_Live_Or_Not) {
                         Ads_Seq = Ads_Seq2;
                     }
@@ -921,7 +920,7 @@ public class Pizza {
 
                     error(e.getMessage());
 
-                    boolean App_Live_Or_Not = isAppLiveOnPlayStore(mContext.getPackageName());
+                    boolean App_Live_Or_Not = isAppLiveOnPlayStore(PackageName);
                     if (!App_Live_Or_Not) {
                         Ads_Seq = SharePref.getAds_Seq2(mContext);
                     }
@@ -929,8 +928,8 @@ public class Pizza {
                 }
             } else {
 
-                boolean App_Live_Or_Not = isAppLiveOnPlayStore(mContext.getPackageName());
-                MyLog.e(mContext.getPackageName(), "" + App_Live_Or_Not);
+                boolean App_Live_Or_Not = isAppLiveOnPlayStore(PackageName);
+                MyLog.e(PackageName, "" + App_Live_Or_Not);
                 if (!App_Live_Or_Not) {
                     Ads_Seq = SharePref.getAds_Seq2(mContext);
                 }
@@ -1562,7 +1561,7 @@ public class Pizza {
                 public void run() {
                     try {
                         if (Loading_Data == 1 || Loading_Data == 0) {
-                            // AdSettings.setTestMode(true);
+//                            AdSettings.setTestMode(true);
                             if (show_ads == 0) {
                                 if (builder.isShowing()) {
                                     builder.dismiss();
@@ -2353,26 +2352,30 @@ public class Pizza {
 
     public static Boolean only_inter = false;
 
-
     public static void Interstial(Context cont_ads) {
 
         only_inter = true;
 
-        Dialog builder;
-        builder = new Dialog(cont_ads);
-        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        if (builder.getWindow() != null)
-            builder.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        builder.setCancelable(false);
-        builder.setContentView(R.layout.loading_ads_inter);
+//        Dialog builder;
+//        builder = new Dialog(cont_ads);
+//        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        if (builder.getWindow() != null)
+//            builder.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        builder.setCancelable(false);
+//
+//
+//        builder.setContentView(R.layout.loading_ads_full);
+//
+//        TextView title1 = builder.findViewById(R.id.title);
+//        TextView message1 = builder.findViewById(R.id.message);
+//        title1.setText("Loading Ads . . .");
+//        message1.setText("Wait While Loading Ads, Sorry for Inconvenience and Thank You for Support and Waiting.");
+//
+//        builder.show();
 
-        TextView title1 = builder.findViewById(R.id.title);
-        TextView message1 = builder.findViewById(R.id.message);
-        title1.setText("Loading Ads . . .");
-        message1.setText("Wait While Loading Ads, Sorry for Inconvenience and Thank You for Support and Waiting.");
 
+        CustomProgressDialogueInter builder = new CustomProgressDialogueInter(cont_ads, "Loading Ads . . .", "Wait While Loading Ads, Sorry for Inconvenience and Thank You for Support and Waiting.", BGColor, TitleTextColor);
         builder.show();
-
 
         if (isNetworkConnected(cont_ads)) {
             if (show_ads == 1) {
@@ -2419,12 +2422,18 @@ public class Pizza {
 
     }
 
-
     public static void Interstial_Load(Context cont_ads) {
         if (show_ads == 1) {
             if (i_nooff == 0) {
                 return;
             }
+
+            if (Extra5.equals("1")) {
+
+                return;
+            }
+
+
             if (Ads_Seq.equals("FB")) {
                 Interstial_Load_FB(cont_ads);
             } else if (Ads_Seq.equals("GL")) {
@@ -2442,8 +2451,15 @@ public class Pizza {
 
     public static void Pre_Interstial_Show(Context cont_ads) {
 
+
         if (For_Approval_Setup.equals("1")) {
             Interstial_Counted(cont_ads);
+            return;
+        }
+
+
+        if (Extra5.equals("1")) {
+            Interstial(cont_ads);
             return;
         }
 
@@ -2554,7 +2570,6 @@ public class Pizza {
 
         }
     }
-
 
     public static void Increase_Ads(Context cont_ads) {
 
@@ -2696,7 +2711,6 @@ public class Pizza {
             }
         }
     }
-
 
     public static InterstitialAd FB_Inter;
 
@@ -2870,6 +2884,12 @@ public class Pizza {
 
     public static void Interstial_Show_AC(Context cont_ads) {
 
+
+        if (!isNetworkConnected(cont_ads)) {
+            return;
+        }
+
+
         CustomProgressDialogue ac_dialog111 = new CustomProgressDialogue(cont_ads, "Ad", "Please wait Ads is loading...");
 
         ac_dialog111.show();
@@ -2989,6 +3009,11 @@ public class Pizza {
     }
 
     public static void Interstial_Show_Tappx(Context cont_ads) {
+
+
+        if (!isNetworkConnected(cont_ads)) {
+            return;
+        }
 
         CustomProgressDialogue tx_dialog = new CustomProgressDialogue(cont_ads, "Ad", "Please wait Ads is loading...");
 
@@ -3682,7 +3707,6 @@ public class Pizza {
                         } else {
                             adView.addView(adView1, new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));
                         }
-
 
                         fb_native_id_count = FB_setup_ads;
                     } catch (Exception E) {
@@ -4801,7 +4825,6 @@ public class Pizza {
                     public void onAdFailedToLoad(LoadAdError adError) {
 
                         Pre_Loaed_Native_What_show = "";
-
                         Native_templateView_pre = null;
                         int aa = gogole_native_id_count_pre + 1;
                         if (aa == Google_SetUp_List_Custom.size()) {
@@ -4906,6 +4929,12 @@ public class Pizza {
         Button Btn_Rate = (Button) dialog.findViewById(R.id.Btn_Rate);
         Button Btn_No = (Button) dialog.findViewById(R.id.Btn_No);
 
+
+        RelativeLayout Exit_Ads = (RelativeLayout) dialog.findViewById(R.id.banner);
+
+        Native(cont_ads, Exit_Ads, 2);
+
+
         Btn_Yes.setText("Yes");
         Btn_Rate.setText("Rate Us");
         Btn_No.setText("No");
@@ -4916,9 +4945,9 @@ public class Pizza {
 
 
                 dialog.dismiss();
-                ((Activity) cont_ads).moveTaskToBack(true);
-                ((Activity) cont_ads).finish();
-
+//                ((Activity) cont_ads).moveTaskToBack(true);
+//                ((Activity) cont_ads).finish();
+                System.exit(0);
 
             }
         });
@@ -4947,8 +4976,9 @@ public class Pizza {
             @Override
             public void onClick(View v) {
 
-
                 dialog.dismiss();
+
+
             }
         });
 
@@ -5007,7 +5037,7 @@ public class Pizza {
         //  Exit_Ads.getLayoutParams().height = (int) (metrics.heightPixels / 1.5);
         Exit_Ads.getLayoutParams().height = (int) (metrics.heightPixels);
 
-        Native(cont_ads, Exit_Ads, 0);
+        Native(cont_ads, Exit_Ads, 2);
 
         Button Btn_Yes = (Button) dialog.findViewById(R.id.Btn_Yes);
         Button Btn_Rate = (Button) dialog.findViewById(R.id.Btn_Rate);
@@ -5034,8 +5064,11 @@ public class Pizza {
                 exit_gifImageView = null;
 
                 dialog.dismiss();
-                ((Activity) cont_ads).moveTaskToBack(true);
-                ((Activity) cont_ads).finish();
+//                ((Activity) cont_ads).moveTaskToBack(true);
+//                ((Activity) cont_ads).finish();
+
+
+                System.exit(0);
 
 
             }
@@ -5086,8 +5119,12 @@ public class Pizza {
     public static void onDobuleBackPressed(Context cont_ads) {
 
         if (doubleBackToExitPressedOnce) {
-            ((Activity) cont_ads).moveTaskToBack(true);
-            ((Activity) cont_ads).finish();
+//            ((Activity) cont_ads).moveTaskToBack(true);
+//           ((Activity) cont_ads).finish();
+
+            System.exit(0);
+
+
         } else {
 
             Toast.makeText(cont_ads, "Press Back Again to Exit",
@@ -5312,21 +5349,21 @@ public class Pizza {
             }
 
 
-            if (Ads_Seq1.equals("AC")) {
-                Interstial_Show_AC(cont_ads);
-                return;
-            } else if (Ads_Seq1.equals("TX")) {
-                Interstial_Show_Tappx(cont_ads);
-                return;
-            }
-
-            if (Ads_Seq2.equals("AC")) {
-                Interstial_Show_AC(cont_ads);
-                return;
-            } else if (Ads_Seq2.equals("TX")) {
-                Interstial_Show_Tappx(cont_ads);
-                return;
-            }
+//            if (Ads_Seq1.equals("AC")) {
+//                Interstial_Show_AC(cont_ads);
+//                return;
+//            } else if (Ads_Seq1.equals("TX")) {
+//                Interstial_Show_Tappx(cont_ads);
+//                return;
+//            }
+//
+//            if (Ads_Seq2.equals("AC")) {
+//                Interstial_Show_AC(cont_ads);
+//                return;
+//            } else if (Ads_Seq2.equals("TX")) {
+//                Interstial_Show_Tappx(cont_ads);
+//                return;
+//            }
 
 
         }
