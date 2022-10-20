@@ -13,6 +13,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -400,6 +401,10 @@ public class TemplateView extends FrameLayout {
         try {
 
             if (SharePref.getNative_custom(mContext).equals("1") || SharePref.getNative_custom(mContext).equals("2")) {
+
+                Log.e("Native_Ad_Size11",""+Native_Ad_Size);
+
+
 
                 if (Native_Ad_Size == 2) {
 
