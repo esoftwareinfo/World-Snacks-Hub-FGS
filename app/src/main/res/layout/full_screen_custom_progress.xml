@@ -32,21 +32,20 @@
     </androidx.cardview.widget.CardView>
 
 
-
     <TextView
         android:id="@+id/title"
-        android:layout_below="@+id/gifImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/gifImageView"
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:text="Title"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="Title" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/message"

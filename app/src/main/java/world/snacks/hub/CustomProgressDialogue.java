@@ -12,10 +12,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 
 
 public class CustomProgressDialogue extends Dialog {
+
     public CustomProgressDialogue(Context context, String title, String description) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
 
@@ -45,26 +47,26 @@ public class CustomProgressDialogue extends Dialog {
         String titleColor = SharePref.getTitleTextColor(context);
         String textColor = SharePref.getDescriptionTextColor(context);
 
-        TextView   title11 =  (TextView) view.findViewById(R.id.title);
+        TextView title11 = (TextView) view.findViewById(R.id.title);
         title11.setText("" + title);
         title11.setTextColor(Color.parseColor(titleColor));
 
 
-        TextView   message =  (TextView) view.findViewById(R.id.message);
+        TextView message = (TextView) view.findViewById(R.id.message);
         message.setText("" + description);
 
         message.setTextColor(Color.parseColor(textColor));
 
-        TextView   loadingtext =  (TextView) view.findViewById(R.id.message);
+        TextView loadingtext = (TextView) view.findViewById(R.id.message);
         loadingtext.setTextColor(Color.parseColor(textColor));
 
 
-
-        CardView card =  (CardView) view.findViewById(R.id.card);
-        RelativeLayout rr =  (RelativeLayout) view.findViewById(R.id.rr);
+        CardView card = (CardView) view.findViewById(R.id.card);
+        RelativeLayout rr = (RelativeLayout) view.findViewById(R.id.rr);
 
         card.setCardBackgroundColor(Color.parseColor(bgcolor));
         rr.setBackgroundColor(Color.parseColor(bgcolor));
+
 
         ProgressBar progressbar = view.findViewById(R.id.progressbar);
 
@@ -72,6 +74,12 @@ public class CustomProgressDialogue extends Dialog {
             progressbar.setIndeterminate(true);
             progressbar.getIndeterminateDrawable().setColorFilter(Color.parseColor(titleColor), PorterDuff.Mode.SRC_IN);
         }
+
+
+
+//        progressbar.getProgressDrawable().setColorFilter(
+//                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+
 
     }
 }

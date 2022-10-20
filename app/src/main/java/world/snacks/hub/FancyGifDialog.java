@@ -182,6 +182,7 @@ public class FancyGifDialog {
 
 
 
+
             CardView card = dialog.findViewById(R.id.card);
             card.setCardBackgroundColor(Color.parseColor(SharePref.getBGColor(context)));
 
@@ -206,6 +207,12 @@ public class FancyGifDialog {
                 pBtn.setText(positiveBtnText);
             if (negativeBtnText != null)
                 nBtn.setText(negativeBtnText);
+
+//            GradientDrawable pbgShape = (GradientDrawable) pBtn.getBackground();
+//            pbgShape.setColor(ContextCompat.getColor(context, pBtnColor));
+//            GradientDrawable nbgShape = (GradientDrawable) nBtn.getBackground();
+//            nbgShape.setColor(ContextCompat.getColor(context, nBtnColor));
+
 
 
 
