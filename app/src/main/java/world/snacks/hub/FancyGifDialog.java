@@ -8,10 +8,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.StringRes;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import pl.droidsonroids.gif.GifImageView;
@@ -176,14 +178,44 @@ public class FancyGifDialog {
             title1.setTextColor(ContextCompat.getColor(context, titleTxtColor));
             message1.setTextColor(ContextCompat.getColor(context, desTxtColor));
 
+
+
+
+
+
+            CardView card = dialog.findViewById(R.id.card);
+            card.setCardBackgroundColor(Color.parseColor(SharePref.getBGColor(context)));
+
+            title1.setTextColor(Color.parseColor(SharePref.getTitleTextColor(context)));
+            message1.setTextColor(Color.parseColor(SharePref.getDescriptionTextColor(context)));
+
+            nBtn.setTextColor(Color.parseColor(SharePref.getButtonTextColor(context)));
+            pBtn.setTextColor(Color.parseColor(SharePref.getButtonTextColor(context)));
+
+
+
+            CardView card1 = dialog.findViewById(R.id.card1);
+            card1.setCardBackgroundColor(Color.parseColor(SharePref.getButtonColor(context)));
+
+            CardView card2 = dialog.findViewById(R.id.card2);
+            card2.setCardBackgroundColor(Color.parseColor(SharePref.getButtonColor(context)));
+
+
+
+
             if (positiveBtnText != null)
                 pBtn.setText(positiveBtnText);
             if (negativeBtnText != null)
                 nBtn.setText(negativeBtnText);
-            GradientDrawable pbgShape = (GradientDrawable) pBtn.getBackground();
-            pbgShape.setColor(ContextCompat.getColor(context, pBtnColor));
-            GradientDrawable nbgShape = (GradientDrawable) nBtn.getBackground();
-            nbgShape.setColor(ContextCompat.getColor(context, nBtnColor));
+
+//            GradientDrawable pbgShape = (GradientDrawable) pBtn.getBackground();
+//            pbgShape.setColor(ContextCompat.getColor(context, pBtnColor));
+//            GradientDrawable nbgShape = (GradientDrawable) nBtn.getBackground();
+//            nbgShape.setColor(ContextCompat.getColor(context, nBtnColor));
+
+
+
+
             if (pListener != null) {
                 pBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
+import com.facebook.ads.AdSettings;
 import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
 import com.facebook.ads.InterstitialAd;
@@ -1574,9 +1575,19 @@ public class Pizza {
                 runnable_splesh_counter = new Runnable() {
                     public void run() {
                         Splesh_Timer = true;
-                        if (builder.isShowing()) {
-                            builder.dismiss();
+
+
+                        try {
+                            if (builder.isShowing()) {
+                                builder.dismiss();
+                            }
+                        } catch (final IllegalArgumentException e) {
+
+                        } catch (final Exception e) {
+                        } finally {
+
                         }
+
                         Interstial_Load(ads_context);
                         Pre_Load_App_Open(ads_context);
                     }
@@ -1589,10 +1600,17 @@ public class Pizza {
                     public void run() {
                         try {
                             if (Loading_Data == 1 || Loading_Data == 0) {
-//                            AdSettings.setTestMode(true);
+                              //  AdSettings.setTestMode(true);
                                 if (show_ads == 0) {
-                                    if (builder.isShowing()) {
-                                        builder.dismiss();
+                                    try {
+                                        if (builder.isShowing()) {
+                                            builder.dismiss();
+                                        }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
                                     }
                                 } else {
                                     Splash_Interstial(builder, ads_context);
@@ -1634,10 +1652,19 @@ public class Pizza {
                             } catch (Exception e) {
 
                             }
-                            if (builder != null) {
-                                if (builder.isShowing()) {
-                                    builder.dismiss();
+
+
+                            try {
+                                if (builder != null) {
+                                    if (builder.isShowing()) {
+                                        builder.dismiss();
+                                    }
                                 }
+                            } catch (final IllegalArgumentException e) {
+
+                            } catch (final Exception e) {
+                            } finally {
+
                             }
                             return;
                         }
@@ -1662,26 +1689,47 @@ public class Pizza {
                         Pre_Load_App_Open(cont_ads);
                         Interstial_Load(cont_ads);
 
+                        try {
+                            if (builder != null) {
+                                if (builder.isShowing()) {
+                                    builder.dismiss();
+                                }
+                            }
+                        } catch (final IllegalArgumentException e) {
+
+                        } catch (final Exception e) {
+                        } finally {
+
+                        }
+                    }
+                } else {
+
+                    try {
                         if (builder != null) {
                             if (builder.isShowing()) {
                                 builder.dismiss();
                             }
                         }
-                    }
-                } else {
+                    } catch (final IllegalArgumentException e) {
 
+                    } catch (final Exception e) {
+                    } finally {
+
+                    }
+                }
+
+            } else {
+                try {
                     if (builder != null) {
                         if (builder.isShowing()) {
                             builder.dismiss();
                         }
                     }
-                }
+                } catch (final IllegalArgumentException e) {
 
-            } else {
-                if (builder != null) {
-                    if (builder.isShowing()) {
-                        builder.dismiss();
-                    }
+                } catch (final Exception e) {
+                } finally {
+
                 }
             }
 
@@ -1738,7 +1786,28 @@ public class Pizza {
                             MyLog.e("splesh Load FB", "fail" + aa);
                             if (fb_splesh_inter_id_count == 6) {
                                 if (Ads_Seq1.equals("FB")) {
-                                    if (Ads_Seq2.equals("AC")) {
+
+
+                                    if (Ads_Seq2.equals("OFF")) {
+
+                                        try {
+                                            handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                        } catch (Exception e) {
+
+                                        }
+                                        try {
+                                            if (builder != null) {
+                                                if (builder.isShowing()) {
+                                                    builder.dismiss();
+                                                }
+                                            }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
+                                        }
+                                    } else if (Ads_Seq2.equals("AC")) {
                                         Splash_Interstial_AC(builder, cont_ads);
                                     } else {
                                         Splash_Interstial_Tappx(builder, cont_ads);
@@ -1749,6 +1818,26 @@ public class Pizza {
                                     Splash_Interstial_AC(builder, cont_ads);
                                 } else if (Ads_Seq1.equals("TX")) {
                                     Splash_Interstial_Tappx(builder, cont_ads);
+                                } else if (Ads_Seq1.equals("OFF")) {
+                                    try {
+                                        handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                    } catch (Exception e) {
+
+                                    }
+                                    try {
+                                        if (builder != null) {
+                                            if (builder.isShowing()) {
+                                                builder.dismiss();
+                                            }
+                                        }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
+                                    }
+
+
                                 } else {
                                     Splash_Interstial_Google(builder, cont_ads);
                                 }
@@ -1773,10 +1862,17 @@ public class Pizza {
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            if (builder != null) {
-                                                if (builder.isShowing()) {
-                                                    builder.dismiss();
+                                            try {
+                                                if (builder != null) {
+                                                    if (builder.isShowing()) {
+                                                        builder.dismiss();
+                                                    }
                                                 }
+                                            } catch (final IllegalArgumentException e) {
+
+                                            } catch (final Exception e) {
+                                            } finally {
+
                                             }
                                         }
                                     }, 500);
@@ -1802,10 +1898,17 @@ public class Pizza {
                                     .build());
                 } else {
 
-                    if (builder != null) {
-                        if (builder.isShowing()) {
-                            builder.dismiss();
+                    try {
+                        if (builder != null) {
+                            if (builder.isShowing()) {
+                                builder.dismiss();
+                            }
                         }
+                    } catch (final IllegalArgumentException e) {
+
+                    } catch (final Exception e) {
+                    } finally {
+
                     }
                 }
             }
@@ -1893,11 +1996,17 @@ public class Pizza {
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            if (builder != null) {
-                                                if (builder.isShowing()) {
-                                                    builder.dismiss();
-
+                                            try {
+                                                if (builder != null) {
+                                                    if (builder.isShowing()) {
+                                                        builder.dismiss();
+                                                    }
                                                 }
+                                            } catch (final IllegalArgumentException e) {
+
+                                            } catch (final Exception e) {
+                                            } finally {
+
                                             }
                                         }
                                     }, 500);
@@ -1905,10 +2014,17 @@ public class Pizza {
 
 
                             } catch (Exception e) {
-                                if (builder != null) {
-                                    if (builder.isShowing()) {
-                                        builder.dismiss();
+                                try {
+                                    if (builder != null) {
+                                        if (builder.isShowing()) {
+                                            builder.dismiss();
+                                        }
                                     }
+                                } catch (final IllegalArgumentException e1) {
+
+                                } catch (final Exception e1) {
+                                } finally {
+
                                 }
                             }
                         }
@@ -1922,16 +2038,57 @@ public class Pizza {
                             int aa = gogole_splesh_inter_id_count + 1;
                             if (aa == Google_SetUp_List_Custom.size()) {
                                 gogole_splesh_inter_id_count = 0;
+
+
                                 if (Ads_Seq1.equals("FB")) {
                                     Splash_Interstial_FB(builder, cont_ads);
                                 } else if (Ads_Seq1.equals("GL")) {
-                                    if (Ads_Seq2.equals("AC")) {
+                                    if (Ads_Seq2.equals("OFF")) {
+                                        try {
+                                            handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                        } catch (Exception e) {
+
+                                        }
+                                        try {
+                                            if (builder != null) {
+                                                if (builder.isShowing()) {
+                                                    builder.dismiss();
+                                                }
+                                            }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
+                                        }
+
+                                    } else if (Ads_Seq2.equals("AC")) {
                                         Splash_Interstial_AC(builder, cont_ads);
                                     } else {
                                         Splash_Interstial_Tappx(builder, cont_ads);
                                     }
                                 } else if (Ads_Seq1.equals("AC")) {
                                     Splash_Interstial_AC(builder, cont_ads);
+                                } else if (Ads_Seq1.equals("OFF")) {
+                                    try {
+                                        handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                    } catch (Exception e) {
+
+                                    }
+                                    try {
+                                        if (builder != null) {
+                                            if (builder.isShowing()) {
+                                                builder.dismiss();
+                                            }
+                                        }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
+                                    }
+
+
                                 } else {
                                     Splash_Interstial_Tappx(builder, cont_ads);
                                 }
@@ -2017,20 +2174,34 @@ public class Pizza {
                                             handler.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    if (builder != null) {
-                                                        if (builder.isShowing()) {
-                                                            builder.dismiss();
+                                                    try {
+                                                        if (builder != null) {
+                                                            if (builder.isShowing()) {
+                                                                builder.dismiss();
+                                                            }
                                                         }
+                                                    } catch (final IllegalArgumentException e) {
+
+                                                    } catch (final Exception e) {
+                                                    } finally {
+
                                                     }
                                                 }
                                             }, 500);
                                         }
 
                                     } catch (Exception e) {
-                                        if (builder != null) {
-                                            if (builder.isShowing()) {
-                                                builder.dismiss();
+                                        try {
+                                            if (builder != null) {
+                                                if (builder.isShowing()) {
+                                                    builder.dismiss();
+                                                }
                                             }
+                                        } catch (final IllegalArgumentException ee) {
+
+                                        } catch (final Exception ee) {
+                                        } finally {
+
                                         }
                                     }
 
@@ -2046,16 +2217,55 @@ public class Pizza {
                                     int aa = gogole_AppOpen_id_count_splesh + 1;
                                     if (aa == Google_SetUp_List_Custom.size()) {
                                         gogole_AppOpen_id_count_splesh = 0;
+
                                         if (Ads_Seq1.equals("FB")) {
                                             Splash_Interstial_FB(builder, cont_ads);
                                         } else if (Ads_Seq1.equals("GL")) {
-                                            if (Ads_Seq2.equals("AC")) {
+                                            if (Ads_Seq2.equals("OFF")) {
+                                                try {
+                                                    handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                                } catch (Exception e) {
+
+                                                }
+                                                try {
+                                                    if (builder != null) {
+                                                        if (builder.isShowing()) {
+                                                            builder.dismiss();
+                                                        }
+                                                    }
+                                                } catch (final IllegalArgumentException e) {
+
+                                                } catch (final Exception e) {
+                                                } finally {
+
+                                                }
+
+                                            } else if (Ads_Seq2.equals("AC")) {
                                                 Splash_Interstial_AC(builder, cont_ads);
                                             } else {
                                                 Splash_Interstial_Tappx(builder, cont_ads);
                                             }
                                         } else if (Ads_Seq1.equals("AC")) {
                                             Splash_Interstial_AC(builder, cont_ads);
+                                        } else if (Ads_Seq1.equals("OFF")) {
+                                            try {
+                                                handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                            } catch (Exception e) {
+
+                                            }
+                                            try {
+                                                if (builder != null) {
+                                                    if (builder.isShowing()) {
+                                                        builder.dismiss();
+                                                    }
+                                                }
+                                            } catch (final IllegalArgumentException e) {
+
+                                            } catch (final Exception e) {
+                                            } finally {
+
+                                            }
+
                                         } else {
                                             Splash_Interstial_Tappx(builder, cont_ads);
                                         }
@@ -2124,11 +2334,17 @@ public class Pizza {
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            if (builder != null) {
-                                                if (builder.isShowing()) {
-                                                    builder.dismiss();
-
+                                            try {
+                                                if (builder != null) {
+                                                    if (builder.isShowing()) {
+                                                        builder.dismiss();
+                                                    }
                                                 }
+                                            } catch (final IllegalArgumentException e) {
+
+                                            } catch (final Exception e) {
+                                            } finally {
+
                                             }
                                         }
                                     }, 500);
@@ -2136,10 +2352,17 @@ public class Pizza {
 
 
                             } catch (Exception e) {
-                                if (builder != null) {
-                                    if (builder.isShowing()) {
-                                        builder.dismiss();
+                                try {
+                                    if (builder != null) {
+                                        if (builder.isShowing()) {
+                                            builder.dismiss();
+                                        }
                                     }
+                                } catch (final IllegalArgumentException ee) {
+
+                                } catch (final Exception ee) {
+                                } finally {
+
                                 }
                             }
                         }
@@ -2156,13 +2379,51 @@ public class Pizza {
                                 if (Ads_Seq1.equals("FB")) {
                                     Splash_Interstial_FB(builder, cont_ads);
                                 } else if (Ads_Seq1.equals("GL")) {
-                                    if (Ads_Seq2.equals("AC")) {
+                                    if (Ads_Seq2.equals("OFF")) {
+                                        try {
+                                            handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                        } catch (Exception e) {
+
+                                        }
+                                        try {
+                                            if (builder != null) {
+                                                if (builder.isShowing()) {
+                                                    builder.dismiss();
+                                                }
+                                            }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
+                                        }
+
+                                    } else if (Ads_Seq2.equals("AC")) {
                                         Splash_Interstial_AC(builder, cont_ads);
-                                    } else {
+                                    }  else {
                                         Splash_Interstial_Tappx(builder, cont_ads);
                                     }
                                 } else if (Ads_Seq1.equals("AC")) {
                                     Splash_Interstial_AC(builder, cont_ads);
+                                }else if (Ads_Seq1.equals("OFF")) {
+                                    try {
+                                        handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                                    } catch (Exception e) {
+
+                                    }
+                                    try {
+                                        if (builder != null) {
+                                            if (builder.isShowing()) {
+                                                builder.dismiss();
+                                            }
+                                        }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
+                                    }
+
                                 } else {
                                     Splash_Interstial_Tappx(builder, cont_ads);
                                 }
@@ -2172,6 +2433,7 @@ public class Pizza {
                             }
                         }
                     });
+
                     Splash_Admob_Inter.loadAd(adRequest);
                 }
 
@@ -2267,11 +2529,17 @@ public class Pizza {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (builder != null) {
-                                            if (builder.isShowing()) {
-                                                builder.dismiss();
-
+                                        try {
+                                            if (builder != null) {
+                                                if (builder.isShowing()) {
+                                                    builder.dismiss();
+                                                }
                                             }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
                                         }
                                     }
                                 }, 500);
@@ -2340,11 +2608,17 @@ public class Pizza {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (builder != null) {
-                                            if (builder.isShowing()) {
-                                                builder.dismiss();
-
+                                        try {
+                                            if (builder != null) {
+                                                if (builder.isShowing()) {
+                                                    builder.dismiss();
+                                                }
                                             }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
                                         }
                                     }
                                 }, 500);
@@ -2371,10 +2645,19 @@ public class Pizza {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (builder != null) {
-                                        if (builder.isShowing()) {
-                                            builder.dismiss();
+
+
+                                    try {
+                                        if (builder != null) {
+                                            if (builder.isShowing()) {
+                                                builder.dismiss();
+                                            }
                                         }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
                                     }
                                 }
                             }, 500);
@@ -2424,24 +2707,6 @@ public class Pizza {
 
             only_inter = true;
 
-//        Dialog builder;
-//        builder = new Dialog(cont_ads);
-//        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        if (builder.getWindow() != null)
-//            builder.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        builder.setCancelable(false);
-//
-//
-//        builder.setContentView(R.layout.loading_ads_full);
-//
-//        TextView title1 = builder.findViewById(R.id.title);
-//        TextView message1 = builder.findViewById(R.id.message);
-//        title1.setText("Loading Ads . . .");
-//        message1.setText("Wait While Loading Ads, Sorry for Inconvenience and Thank You for Support and Waiting.");
-//
-//        builder.show();
-
-
             CustomProgressDialogueInter builder = new CustomProgressDialogueInter(cont_ads, "Loading Ads . . .", "Wait While Loading Ads, Sorry for Inconvenience and Thank You for Support and Waiting.", BGColor, TitleTextColor);
             builder.show();
 
@@ -2453,11 +2718,20 @@ public class Pizza {
                         } catch (Exception e) {
 
                         }
-                        if (builder != null) {
-                            if (builder.isShowing()) {
-                                builder.dismiss();
+
+                        try {
+                            if (builder != null) {
+                                if (builder.isShowing()) {
+                                    builder.dismiss();
+                                }
                             }
+                        } catch (final IllegalArgumentException e) {
+
+                        } catch (final Exception e) {
+                        } finally {
+
                         }
+
                         return;
                     }
                     if (Ads_Seq.equals("FB")) {
@@ -2473,18 +2747,34 @@ public class Pizza {
                     }
                 } else {
 
+                    try {
+                        if (builder != null) {
+                            if (builder.isShowing()) {
+                                builder.dismiss();
+                            }
+                        }
+                    } catch (final IllegalArgumentException e) {
+
+                    } catch (final Exception e) {
+                    } finally {
+
+                    }
+                }
+
+            } else {
+
+
+                try {
                     if (builder != null) {
                         if (builder.isShowing()) {
                             builder.dismiss();
                         }
                     }
-                }
+                } catch (final IllegalArgumentException e) {
 
-            } else {
-                if (builder != null) {
-                    if (builder.isShowing()) {
-                        builder.dismiss();
-                    }
+                } catch (final Exception e) {
+                } finally {
+
                 }
             }
 
@@ -2496,6 +2786,12 @@ public class Pizza {
     }
 
     public static void Interstial_Load(Context cont_ads) {
+
+
+        Log.e("Interstial_Load", "call");
+        Log.e("Ads_Seq", "" + Ads_Seq);
+        Log.e("Ads_Seq", "" + Ads_Seq1);
+        Log.e("Ads_Seq", "" + Ads_Seq2);
 
 
         try {
@@ -2556,16 +2852,17 @@ public class Pizza {
                     return;
                 }
 
-                if (FB_Inter != null) {
-                    if (FB_Inter.isAdLoaded()) {
-                        try {
-                            FB_Inter.show();
-                            return;
-                        } catch (Exception e) {
 
+                    if (FB_Inter != null) {
+                        if (FB_Inter.isAdLoaded()) {
+                            try {
+                                FB_Inter.show();
+                                return;
+                            } catch (Exception e) {
+
+                            }
                         }
                     }
-                }
 
                 if (i_ao_ex == 2) {
                     if (Pre_appOpenAd != null) {
@@ -2586,6 +2883,12 @@ public class Pizza {
                                         Pre_appOpenAd = null;
                                         isLoadingAd = false;
                                         Pre_Load_App_Open(cont_ads);
+                                        Pre_Interstial_Show_FailToAppOpen(cont_ads);
+
+                                        if (!Inter_loading_progress) {
+                                            Interstial_Load(cont_ads);
+                                        }
+
                                     }
 
                                 });
@@ -2654,6 +2957,84 @@ public class Pizza {
         }
     }
 
+    public static void Pre_Interstial_Show_FailToAppOpen(Context cont_ads) {
+        try {
+
+            if (For_Approval_Setup.equals("1")) {
+                Interstial_Counted(cont_ads);
+                return;
+            }
+
+
+            if (Extra5.equals("1")) {
+                Interstial(cont_ads);
+                return;
+            }
+
+            if (show_ads == 1) {
+
+                if (i_nooff == 0) {
+                    return;
+                }
+
+                if (Ads_Seq.equals("AC")) {
+                    Interstial_Show_AC(cont_ads);
+                    return;
+                } else if (Ads_Seq.equals("TX")) {
+                    Interstial_Show_Tappx(cont_ads);
+                    return;
+                }
+
+                if (FB_Inter != null) {
+                    if (FB_Inter.isAdLoaded()) {
+                        try {
+                            FB_Inter.show();
+                            return;
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+
+
+                if (Google_Inter != null) {
+                    if (Google_Inter.isLoaded()) {
+                        try {
+                            Google_Inter.show();
+                            return;
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+
+
+                if (i_ao_ex == 2) {
+                    if (FB_Inter_appopen != null) {
+                        if (FB_Inter_appopen.isAdLoaded()) {
+                            try {
+                                FB_Inter_appopen.show();
+                                return;
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    }
+                }
+
+                if (!Inter_loading_progress) {
+                    Interstial_Load(cont_ads);
+                }
+
+
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+
     public static void Increase_Ads(Context cont_ads) {
 
         try {
@@ -2704,16 +3085,18 @@ public class Pizza {
                         return;
                     }
 
-                    if (FB_Inter != null) {
-                        if (FB_Inter.isAdLoaded()) {
-                            try {
-                                FB_Inter.show();
-                                return;
-                            } catch (Exception e) {
 
+                        if (FB_Inter != null) {
+                            if (FB_Inter.isAdLoaded()) {
+                                try {
+                                    FB_Inter.show();
+                                    return;
+                                } catch (Exception e) {
+
+                                }
                             }
                         }
-                    }
+
 
                     if (i_ao_ex == 2) {
                         if (Pre_appOpenAd != null) {
@@ -2734,6 +3117,8 @@ public class Pizza {
                                             Pre_appOpenAd = null;
                                             isLoadingAd = false;
                                             Pre_Load_App_Open(cont_ads);
+
+                                            Pre_Interstial_Show_FailToAppOpen(cont_ads);
                                         }
 
                                     });
@@ -3038,12 +3423,20 @@ public class Pizza {
                 public void onError(String placementId, VungleException exception) {
                     try {
 
-                        if (ac_dialog111 != null) {
-                            if (ac_dialog111.isShowing()) {
-                                ac_dialog111.dismiss();
+                        try {
+                            if (ac_dialog111 != null) {
+                                if (ac_dialog111.isShowing()) {
+                                    ac_dialog111.dismiss();
 
+                                }
                             }
+                        } catch (final IllegalArgumentException e) {
+
+                        } catch (final Exception e) {
+                        } finally {
+
                         }
+
 
                     } catch (Exception e) {
 
@@ -3083,12 +3476,22 @@ public class Pizza {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (ac_dialog111 != null) {
-                                        if (ac_dialog111.isShowing()) {
-                                            ac_dialog111.dismiss();
 
+                                    try {
+                                        if (ac_dialog111 != null) {
+                                            if (ac_dialog111.isShowing()) {
+                                                ac_dialog111.dismiss();
+
+                                            }
                                         }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
                                     }
+
+
                                 }
                             }, 500);
                         } catch (Exception e) {
@@ -3146,10 +3549,18 @@ public class Pizza {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (tx_dialog != null) {
-                                            if (tx_dialog.isShowing()) {
-                                                tx_dialog.dismiss();
+
+                                        try {
+                                            if (tx_dialog != null) {
+                                                if (tx_dialog.isShowing()) {
+                                                    tx_dialog.dismiss();
+                                                }
                                             }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
                                         }
                                     }
                                 }, 500);
@@ -3169,11 +3580,20 @@ public class Pizza {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (tx_dialog != null) {
-                                        if (tx_dialog.isShowing()) {
-                                            tx_dialog.dismiss();
+
+                                    try {
+                                        if (tx_dialog != null) {
+                                            if (tx_dialog.isShowing()) {
+                                                tx_dialog.dismiss();
+                                            }
                                         }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
                                     }
+
                                 }
                             }, 500);
 
@@ -3227,10 +3647,18 @@ public class Pizza {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (ac_dialog111 != null) {
-                                            if (ac_dialog111.isShowing()) {
-                                                ac_dialog111.dismiss();
+
+                                        try {
+                                            if (ac_dialog111 != null) {
+                                                if (ac_dialog111.isShowing()) {
+                                                    ac_dialog111.dismiss();
+                                                }
                                             }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
                                         }
                                     }
                                 }, 500);
@@ -3249,11 +3677,22 @@ public class Pizza {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (ac_dialog111 != null) {
-                                            if (ac_dialog111.isShowing()) {
-                                                ac_dialog111.dismiss();
+
+
+                                        try {
+                                            if (ac_dialog111 != null) {
+                                                if (ac_dialog111.isShowing()) {
+                                                    ac_dialog111.dismiss();
+                                                }
                                             }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
                                         }
+
+
                                     }
                                 }, 1000);
                             } catch (Exception e) {
@@ -3421,7 +3860,9 @@ public class Pizza {
                         fb_banner_id_count = FB_setup_ads;
                         adView.setVisibility(View.GONE);
                         if (Ads_Seq1.equals("FB")) {
-                            if (Ads_Seq2.equals("AC")) {
+                            if (Ads_Seq2.equals("OFF")) {
+
+                            } else if (Ads_Seq2.equals("AC")) {
                                 Banner_AC(cont_ads, adView, bannerType);
                             } else {
                                 Banner_Tappx(cont_ads, adView, bannerType);
@@ -3432,6 +3873,8 @@ public class Pizza {
                             Banner_AC(cont_ads, adView, bannerType);
                         } else if (Ads_Seq1.equals("TX")) {
                             Banner_Tappx(cont_ads, adView, bannerType);
+                        } else if (Ads_Seq1.equals("OFF")) {
+
                         } else {
                             Banner_Tappx(cont_ads, adView, bannerType);
                         }
@@ -3573,7 +4016,9 @@ public class Pizza {
                         if (Ads_Seq1.equals("FB")) {
                             Banner_FB(cont_ads, adView, bannerType);
                         } else if (Ads_Seq1.equals("GL")) {
-                            if (Ads_Seq2.equals("AC")) {
+                            if (Ads_Seq2.equals("OFF")) {
+
+                            } else if (Ads_Seq2.equals("AC")) {
                                 Banner_AC(cont_ads, adView, bannerType);
                             } else {
                                 Banner_Tappx(cont_ads, adView, bannerType);
@@ -3582,6 +4027,8 @@ public class Pizza {
                             Banner_AC(cont_ads, adView, bannerType);
                         } else if (Ads_Seq1.equals("TX")) {
                             Banner_Tappx(cont_ads, adView, bannerType);
+                        } else if (Ads_Seq1.equals("OFF")) {
+
                         } else {
                             Banner_Tappx(cont_ads, adView, bannerType);
                         }
@@ -3798,18 +4245,21 @@ public class Pizza {
                             fb_native_id_count = FB_setup_ads;
                             adView.setVisibility(View.GONE);
                             if (Ads_Seq1.equals("FB")) {
-                                if (Ads_Seq2.equals("AC")) {
+                                if (Ads_Seq2.equals("OFF")) {
+
+                                } else if (Ads_Seq2.equals("AC")) {
                                     Banner_AC(cont_ads, adView, 3);
                                 } else {
                                     Banner_Tappx(cont_ads, adView, 3);
                                 }
-
                             } else if (Ads_Seq1.equals("GL")) {
                                 Native_Google(cont_ads, adView, nativeType);
                             } else if (Ads_Seq1.equals("AC")) {
                                 Banner_AC(cont_ads, adView, 3);
                             } else if (Ads_Seq1.equals("TX")) {
                                 Banner_Tappx(cont_ads, adView, 3);
+                            } else if (Ads_Seq1.equals("OFF")) {
+
                             } else {
                                 Native_Google(cont_ads, adView, nativeType);
                             }
@@ -3921,7 +4371,9 @@ public class Pizza {
                             adView.removeAllViews();
                             adView.setVisibility(View.GONE);
                             if (Ads_Seq1.equals("FB")) {
-                                if (Ads_Seq2.equals("AC")) {
+                                if (Ads_Seq2.equals("OFF")) {
+
+                                } else if (Ads_Seq2.equals("AC")) {
                                     Banner_AC(cont_ads, adView, 1);
                                 } else {
                                     Banner_Tappx(cont_ads, adView, 1);
@@ -3932,6 +4384,8 @@ public class Pizza {
                                 Banner_AC(cont_ads, adView, 1);
                             } else if (Ads_Seq1.equals("TX")) {
                                 Banner_Tappx(cont_ads, adView, 1);
+
+                            } else if (Ads_Seq1.equals("OFF")) {
 
                             } else {
                                 Native_Google(cont_ads, adView, nativeType);
@@ -4109,10 +4563,15 @@ public class Pizza {
                             int aa = gogole_native_id_count + 1;
                             if (aa == Google_SetUp_List_Custom.size()) {
                                 gogole_native_id_count = 0;
+
+
                                 if (Ads_Seq1.equals("FB")) {
                                     Native_FB(cont_ads, adView, nativeType);
                                 } else if (Ads_Seq1.equals("GL")) {
-                                    if (Ads_Seq2.equals("AC")) {
+
+                                    if (Ads_Seq2.equals("OFF")) {
+
+                                    } else if (Ads_Seq2.equals("AC")) {
                                         if (nativeType == 1) {
                                             Banner_AC(cont_ads, adView, 1);
                                         } else {
@@ -4139,6 +4598,8 @@ public class Pizza {
                                     } else {
                                         Banner_Tappx(cont_ads, adView, 3);
                                     }
+                                } else if (Ads_Seq1.equals("OFF")) {
+
                                 } else {
                                     if (nativeType == 1) {
                                         Banner_AC(cont_ads, adView, 1);
@@ -4371,7 +4832,9 @@ public class Pizza {
                         fb_banner_id_count_pre = FB_setup_ads;
                         if (Ads_Seq1.equals("FB")) {
                             MyLog.e("Ads_Seq2", "" + Ads_Seq2);
-                            if (Ads_Seq2.equals("AC")) {
+                            if (Ads_Seq2.equals("OFF")) {
+
+                            } else if (Ads_Seq2.equals("AC")) {
                                 Pre_Banner_AC(cont_ads, bannerType);
                             } else {
                                 Pre_Banner_Tappx(cont_ads, bannerType);
@@ -4382,6 +4845,8 @@ public class Pizza {
                             Pre_Banner_AC(cont_ads, bannerType);
                         } else if (Ads_Seq1.equals("TX")) {
                             Pre_Banner_Tappx(cont_ads, bannerType);
+                        } else if (Ads_Seq1.equals("OFF")) {
+
                         } else {
                             Pre_Banner_Google(cont_ads, bannerType);
                         }
@@ -4492,7 +4957,9 @@ public class Pizza {
                         if (Ads_Seq1.equals("FB")) {
                             Pre_Banner_FB(cont_ads, bannerType);
                         } else if (Ads_Seq1.equals("GL")) {
-                            if (Ads_Seq2.equals("AC")) {
+                            if (Ads_Seq2.equals("OFF")) {
+
+                            } else if (Ads_Seq2.equals("AC")) {
                                 Pre_Banner_AC(cont_ads, bannerType);
                             } else {
                                 Pre_Banner_Tappx(cont_ads, bannerType);
@@ -4501,6 +4968,8 @@ public class Pizza {
                             Pre_Banner_AC(cont_ads, bannerType);
                         } else if (Ads_Seq1.equals("TX")) {
                             Pre_Banner_Tappx(cont_ads, bannerType);
+                        } else if (Ads_Seq1.equals("OFF")) {
+
                         } else {
                             Pre_Banner_AC(cont_ads, bannerType);
                         }
@@ -4795,8 +5264,9 @@ public class Pizza {
 
                             if (Ads_Seq1.equals("FB")) {
 
+                                if (Ads_Seq2.equals("OFF")) {
 
-                                if (Ads_Seq2.equals("AC")) {
+                                } else if (Ads_Seq2.equals("AC")) {
                                     Pre_Banner_AC(cont_ads, 3);
                                 } else {
                                     Pre_Banner_Tappx(cont_ads, 3);
@@ -4808,6 +5278,8 @@ public class Pizza {
                                 Pre_Banner_AC(cont_ads, 3);
                             } else if (Ads_Seq1.equals("TX")) {
                                 Pre_Banner_Tappx(cont_ads, 3);
+                            } else if (Ads_Seq1.equals("OFF")) {
+
                             } else {
                                 Pre_Native_Google(cont_ads, nativeType);
                             }
@@ -4895,7 +5367,9 @@ public class Pizza {
                             fb_nativesmalll_id_count_Pre = FB_setup_ads;
 
                             if (Ads_Seq1.equals("FB")) {
-                                if (Ads_Seq2.equals("AC")) {
+                                if (Ads_Seq2.equals("OFF")) {
+
+                                } else if (Ads_Seq2.equals("AC")) {
                                     Pre_Banner_AC(cont_ads, 1);
                                 } else {
                                     Pre_Banner_Tappx(cont_ads, 1);
@@ -4906,6 +5380,8 @@ public class Pizza {
                                 Pre_Banner_AC(cont_ads, 1);
                             } else if (Ads_Seq1.equals("TX")) {
                                 Pre_Banner_Tappx(cont_ads, 1);
+
+                            } else if (Ads_Seq1.equals("OFF")) {
 
                             } else {
                                 Pre_Native_Google(cont_ads, nativeType);
@@ -5036,7 +5512,10 @@ public class Pizza {
                                 if (Ads_Seq1.equals("FB")) {
                                     Pre_Native_FB(cont_ads, nativeType);
                                 } else if (Ads_Seq1.equals("GL")) {
-                                    if (Ads_Seq2.equals("AC")) {
+
+                                    if (Ads_Seq2.equals("OFF")) {
+
+                                    } else if (Ads_Seq2.equals("AC")) {
                                         if (nativeType == 1) {
                                             Pre_Banner_AC(cont_ads, 1);
                                         } else {
@@ -5062,6 +5541,8 @@ public class Pizza {
                                     } else {
                                         Pre_Banner_Tappx(cont_ads, 3);
                                     }
+                                } else if (Ads_Seq1.equals("OFF")) {
+
                                 } else {
                                     if (nativeType == 1) {
                                         Pre_Banner_AC(cont_ads, 1);
@@ -5143,7 +5624,7 @@ public class Pizza {
 
             RelativeLayout Exit_Ads = (RelativeLayout) dialog.findViewById(R.id.banner);
 
-            Native(cont_ads, Exit_Ads, 2);
+            Native(cont_ads, Exit_Ads, 1);
 
 
             Btn_Yes.setText("Yes");
@@ -5155,7 +5636,14 @@ public class Pizza {
                 public void onClick(View v) {
 
 
-                    dialog.dismiss();
+                    try {
+                        dialog.dismiss();
+                    } catch (final IllegalArgumentException e) {
+
+                    } catch (final Exception e) {
+                    } finally {
+
+                    }
 //                ((Activity) cont_ads).moveTaskToBack(true);
 //                ((Activity) cont_ads).finish();
                     System.exit(0);
@@ -5187,7 +5675,14 @@ public class Pizza {
                 @Override
                 public void onClick(View v) {
 
-                    dialog.dismiss();
+                    try {
+                        dialog.dismiss();
+                    } catch (final IllegalArgumentException e) {
+
+                    } catch (final Exception e) {
+                    } finally {
+
+                    }
 
 
                 }
@@ -5209,8 +5704,7 @@ public class Pizza {
     public void Exit_Popup_With_Ads_Native(final Context cont_ads) {
 
         try {
-            DisplayMetrics metrics = cont_ads.getResources()
-                    .getDisplayMetrics();
+
             String Description = "Do You Want To Exit ?";
 
             final Dialog dialog = new Dialog(cont_ads, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
@@ -5219,54 +5713,21 @@ public class Pizza {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             dialog.setCancelable(true);
-            dialog.setContentView(R.layout.exit_layout);
+            dialog.setContentView(R.layout.without_ads_exit_layout);
 
             TextView text = (TextView) dialog.findViewById(R.id.title);
-            text.setTextColor(Color.parseColor(SharePref.getButtonColor(cont_ads)));
             text.setText(Description);
 
-
-            if (SharePref.getBGColor(cont_ads).length() >= 9) {
-
-
-                try {
-                    String aaa = removeChar(SharePref.getBGColor(cont_ads), 1);
-                    aaa = removeChar(aaa, 1);
-                    dialog.findViewById(R.id.exit_main_back).setBackgroundColor(Color.parseColor(aaa));
-                } catch (Exception e) {
-                    dialog.findViewById(R.id.exit_main_back).setBackgroundColor(Color.GRAY);
-                }
-
-
-            } else {
-                dialog.findViewById(R.id.exit_main_back).setBackgroundColor(Color.parseColor(SharePref.getBGColor(cont_ads)));
-
-            }
-
-
-            exit_gifImageView = (GifImageView) dialog.findViewById(R.id.gifImageView);
-
-
-            RelativeLayout Exit_Ads = (RelativeLayout) dialog.findViewById(R.id.banner22);
-
-            //  Exit_Ads.getLayoutParams().height = (int) (metrics.heightPixels / 1.5);
-            Exit_Ads.getLayoutParams().height = (int) (metrics.heightPixels);
-
-            Native(cont_ads, Exit_Ads, 2);
 
             Button Btn_Yes = (Button) dialog.findViewById(R.id.Btn_Yes);
             Button Btn_Rate = (Button) dialog.findViewById(R.id.Btn_Rate);
             Button Btn_No = (Button) dialog.findViewById(R.id.Btn_No);
 
 
-            Btn_Yes.setBackgroundColor(Color.parseColor(SharePref.getButtonColor(cont_ads)));
-            Btn_Rate.setBackgroundColor(Color.parseColor(SharePref.getButtonColor(cont_ads)));
-            Btn_No.setBackgroundColor(Color.parseColor(SharePref.getButtonColor(cont_ads)));
+            RelativeLayout Exit_Ads = (RelativeLayout) dialog.findViewById(R.id.banner);
 
+            Native(cont_ads, Exit_Ads, 2);
 
-            Btn_Yes.setTextColor(Color.parseColor(SharePref.getButtonTextColor(cont_ads)));
-            Btn_Rate.setTextColor(Color.parseColor(SharePref.getButtonTextColor(cont_ads)));
-            Btn_No.setTextColor(Color.parseColor(SharePref.getButtonTextColor(cont_ads)));
 
             Btn_Yes.setText("Yes");
             Btn_Rate.setText("Rate Us");
@@ -5276,15 +5737,18 @@ public class Pizza {
                 @Override
                 public void onClick(View v) {
 
-                    exit_gifImageView = null;
 
-                    dialog.dismiss();
+                    try {
+                        dialog.dismiss();
+                    } catch (final IllegalArgumentException e) {
+
+                    } catch (final Exception e) {
+                    } finally {
+
+                    }
 //                ((Activity) cont_ads).moveTaskToBack(true);
 //                ((Activity) cont_ads).finish();
-
-
                     System.exit(0);
-
 
                 }
             });
@@ -5313,16 +5777,25 @@ public class Pizza {
                 @Override
                 public void onClick(View v) {
 
-                    exit_gifImageView = null;
+                    try {
+                        dialog.dismiss();
+                    } catch (final IllegalArgumentException e) {
 
-                    dialog.dismiss();
+                    } catch (final Exception e) {
+                    } finally {
+
+                    }
+
+
                 }
             });
 
             dialog.show();
+
         } catch (Exception e) {
 
         }
+
 
     }
 
@@ -5430,12 +5903,17 @@ public class Pizza {
 
                                             @Override
                                             public void onAdLoaded(AppOpenAd ad) {
+
+                                                Log.e("onAdLoaded", "onAdLoaded");
                                                 Pre_appOpenAd = ad;
                                                 isLoadingAd = false;
                                             }
 
                                             @Override
                                             public void onAdFailedToLoad(LoadAdError loadAdError) {
+
+
+                                                Log.e("onAdFailedToLoad", "onAdFailedToLoad");
                                                 Pre_appOpenAd = null;
 
 
@@ -5512,17 +5990,24 @@ public class Pizza {
                                     @Override
                                     public void onAdDismissedFullScreenContent() {
                                         super.onAdDismissedFullScreenContent();
+
+                                        Log.e("onAdDismissed", "onAdDismissedFullScreenContent: ");
                                         Pre_appOpenAd = null;
                                         isLoadingAd = false;
                                         Pre_Load_App_Open(cont_ads);
+
                                     }
 
                                     @Override
                                     public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
                                         super.onAdFailedToShowFullScreenContent(adError);
+
+                                        Log.e("onAdFailedToShow", "onAdFailedToShowFullScreenContent: " + adError.getMessage());
                                         Pre_appOpenAd = null;
                                         isLoadingAd = false;
                                         Pre_Load_App_Open(cont_ads);
+                                        Pre_Interstial_Show_FailToAppOpen(cont_ads);
+
                                     }
 
                                 });
@@ -5689,6 +6174,13 @@ public class Pizza {
         try {
             Rewarded_progressDialog = new CustomProgressDialogue(cont_ads, title, description);
 
+
+
+
+
+
+
+
             gogole_splesh_inter_id_count = 0;
             fb_splesh_inter_id_count = FB_setup_ads;
             if (show_ads == 0) {
@@ -5708,6 +6200,7 @@ public class Pizza {
             builder.setNegativeBtnBackground(R.color.positiveButton);
             builder.setGifResource(R.drawable.ad1);
             builder.isCancellable(true);
+
             builder.OnPositiveClicked(new FancyGifDialogListener() {
                 @Override
                 public void OnClick() {
@@ -5841,7 +6334,15 @@ public class Pizza {
                                 @Override
                                 public void run() {
                                     if (Rewarded_progressDialog.isShowing()) {
-                                        Rewarded_progressDialog.dismiss();
+
+                                        try {
+                                            Rewarded_progressDialog.dismiss();
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
+                                        }
 
                                     }
                                 }
@@ -5963,7 +6464,10 @@ public class Pizza {
 
                                     try {
                                         Rewarded_progressDialog.dismiss();
-                                    } catch (Exception e) {
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
 
                                     }
 
@@ -6052,21 +6556,40 @@ public class Pizza {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (Rewarded_progressDialog != null) {
-                                    if (Rewarded_progressDialog.isShowing()) {
-                                        Rewarded_progressDialog.dismiss();
+
+
+                                try {
+                                    if (Rewarded_progressDialog != null) {
+                                        if (Rewarded_progressDialog.isShowing()) {
+                                            Rewarded_progressDialog.dismiss();
+                                        }
                                     }
+                                } catch (final IllegalArgumentException e) {
+
+                                } catch (final Exception e) {
+                                } finally {
+
                                 }
+
+
                             }
                         }, 500);
 
                     } catch (Exception e) {
 
-                        if (Rewarded_progressDialog != null) {
-                            if (Rewarded_progressDialog.isShowing()) {
-                                Rewarded_progressDialog.dismiss();
+                        try {
+                            if (Rewarded_progressDialog != null) {
+                                if (Rewarded_progressDialog.isShowing()) {
+                                    Rewarded_progressDialog.dismiss();
+                                }
                             }
+                        } catch (final IllegalArgumentException ee) {
+
+                        } catch (final Exception ee) {
+                        } finally {
+
                         }
+
                     }
                 }
 
@@ -6151,11 +6674,20 @@ public class Pizza {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (Rewarded_progressDialog != null) {
-                                        if (Rewarded_progressDialog.isShowing()) {
-                                            Rewarded_progressDialog.dismiss();
+                                    try {
+                                        if (Rewarded_progressDialog != null) {
+                                            if (Rewarded_progressDialog.isShowing()) {
+                                                Rewarded_progressDialog.dismiss();
+                                            }
                                         }
+                                    } catch (final IllegalArgumentException e) {
+
+                                    } catch (final Exception e) {
+                                    } finally {
+
                                     }
+
+
                                 }
                             }, 500);
 
@@ -6274,8 +6806,15 @@ public class Pizza {
                             @Override
                             public void run() {
 
-                                if (Rewarded_progressDialog.isShowing()) {
-                                    Rewarded_progressDialog.dismiss();
+                                try {
+                                    if (Rewarded_progressDialog.isShowing()) {
+                                        Rewarded_progressDialog.dismiss();
+
+                                    }
+                                } catch (final IllegalArgumentException e) {
+
+                                } catch (final Exception e) {
+                                } finally {
 
                                 }
                             }
@@ -6325,10 +6864,18 @@ public class Pizza {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (Rewarded_progressDialog != null) {
-                                            if (Rewarded_progressDialog.isShowing()) {
-                                                Rewarded_progressDialog.dismiss();
+
+                                        try {
+                                            if (Rewarded_progressDialog != null) {
+                                                if (Rewarded_progressDialog.isShowing()) {
+                                                    Rewarded_progressDialog.dismiss();
+                                                }
                                             }
+                                        } catch (final IllegalArgumentException e) {
+
+                                        } catch (final Exception e) {
+                                        } finally {
+
                                         }
                                     }
                                 }, 500);
@@ -6344,6 +6891,8 @@ public class Pizza {
                                 TappxInterstitial tappxInterstitial,
                                 TappxAdError tappxAdError) {
                             onRewardgetListner.OnReward(true);
+
+
                             try {
                                 if (Rewarded_progressDialog != null) {
                                     if (Rewarded_progressDialog.isShowing()) {
@@ -6351,7 +6900,10 @@ public class Pizza {
 
                                     }
                                 }
-                            } catch (Exception e) {
+                            } catch (final IllegalArgumentException e) {
+
+                            } catch (final Exception e) {
+                            } finally {
 
                             }
 
@@ -6369,6 +6921,7 @@ public class Pizza {
                                 TappxInterstitial arg0) {
 
                             onRewardgetListner.OnReward(true);
+
                             try {
                                 if (Rewarded_progressDialog != null) {
                                     if (Rewarded_progressDialog.isShowing()) {
@@ -6376,10 +6929,12 @@ public class Pizza {
 
                                     }
                                 }
-                            } catch (Exception e) {
+                            } catch (final IllegalArgumentException e) {
+
+                            } catch (final Exception e) {
+                            } finally {
 
                             }
-
                         }
 
                         @Override

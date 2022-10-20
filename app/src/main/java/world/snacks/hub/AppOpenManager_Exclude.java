@@ -5,6 +5,7 @@ import static androidx.lifecycle.Lifecycle.Event.ON_START;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,11 +38,24 @@ public class AppOpenManager_Exclude implements Application.ActivityLifecycleCall
     }
 
     public void showAdIfAvailable() {
-        Pizza.AppOpen_Show(currentActivity);
+
+        if(Check == 0){
+
+            Pizza.AppOpen_Show(currentActivity);
+        }else{
+            Check = 0;
+
+        }
+
     }
 
     @OnLifecycleEvent(ON_START)
     public void onStart() {
+
+
+        Log.e("onStart","onStart");
+
+
         if ((currentActivity.getLocalClassName()).equals(AC1) ||
                 (currentActivity.getLocalClassName()).equals(AC2) ||
                 (currentActivity.getLocalClassName()).equals(AC3) ||
@@ -51,11 +65,8 @@ public class AppOpenManager_Exclude implements Application.ActivityLifecycleCall
 
         } else {
 
-            if (Check == 0) {
                 showAdIfAvailable();
-            }else{
-                Check = 0;
-            }
+
 
         }
     }
