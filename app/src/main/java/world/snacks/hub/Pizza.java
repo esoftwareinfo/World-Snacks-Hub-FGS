@@ -3230,111 +3230,11 @@ public class Pizza {
 
                     SharePref.setCounter_Ads(cont_ads, 1);
 
-                    if (i_nooff == 0) {
-                        return;
-                    }
+                    try {
+                        Pre_Interstial_Show(cont_ads);
 
-                    if (Ads_Seq.equals("AC")) {
-                        Interstial_Show_AC(cont_ads);
-                        return;
-                    } else if (Ads_Seq.equals("TX")) {
-                        Interstial_Show_Tappx(cont_ads);
-                        return;
-                    }
+                    } catch (Exception e) {
 
-
-                    if (FB_Inter != null) {
-                        if (FB_Inter.isAdLoaded()) {
-                            try {
-                                FB_Inter.show();
-                                return;
-                            } catch (Exception e) {
-
-                            }
-                        }
-                    }
-
-
-                    if (i_ao_ex == 2) {
-                        if (Pre_appOpenAd != null) {
-                            if (!isLoadingAd) {
-                                try {
-                                    Pre_appOpenAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                                        @Override
-                                        public void onAdDismissedFullScreenContent() {
-                                            super.onAdDismissedFullScreenContent();
-                                            Pre_appOpenAd = null;
-                                            isLoadingAd = false;
-                                            Pre_Load_App_Open(cont_ads);
-                                        }
-
-                                        @Override
-                                        public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
-                                            super.onAdFailedToShowFullScreenContent(adError);
-                                            Pre_appOpenAd = null;
-                                            isLoadingAd = false;
-                                            Pre_Load_App_Open(cont_ads);
-
-                                            Pre_Interstial_Show_FailToAppOpen(cont_ads);
-                                        }
-
-                                    });
-
-                                    try {
-                                        Pre_appOpenAd.show((Activity) cont_ads);
-                                    } catch (Exception e) {
-
-                                    }
-                                    return;
-                                } catch (Exception e) {
-
-                                }
-                            }
-                        }
-                    } else {
-                        if (Google_Inter != null) {
-
-                            try {
-                                Google_Inter.show((Activity) cont_ads);
-                                return;
-                            } catch (Exception e) {
-
-                            }
-
-                        }
-                    }
-
-                    if (i_ao_ex == 2) {
-                        if (FB_Inter_appopen != null) {
-                            if (FB_Inter_appopen.isAdLoaded()) {
-                                try {
-                                    FB_Inter_appopen.show();
-                                    return;
-                                } catch (Exception e) {
-
-                                }
-                            }
-                        }
-                    }
-
-                    if (!Inter_loading_progress) {
-                        Interstial_Load(cont_ads);
-                    }
-
-                    if (Ads_Seq1.equals("AC")) {
-                        Interstial_Show_AC(cont_ads);
-                        return;
-                    } else if (Ads_Seq1.equals("TX")) {
-                        Interstial_Show_Tappx(cont_ads);
-                        return;
-                    }
-
-                    if (Ads_Seq2.equals("AC")) {
-                        Interstial_Show_AC(cont_ads);
-                        return;
-                    } else if (Ads_Seq2.equals("TX")) {
-                        Interstial_Show_Tappx(cont_ads);
-                        return;
                     }
 
 
