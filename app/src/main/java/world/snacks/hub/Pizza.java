@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.ads.Ad;
@@ -1602,7 +1603,7 @@ public class Pizza {
                     public void run() {
                         try {
                             if (Loading_Data == 1 || Loading_Data == 0) {
-                               // AdSettings.setTestMode(true);
+                                //AdSettings.setTestMode(true);
                                 if (show_ads == 0) {
                                     try {
                                         if (builder.isShowing()) {
@@ -3236,7 +3237,6 @@ public class Pizza {
                     } catch (Exception e) {
 
                     }
-
 
                 } else {
                     counter_ads = counter_ads + 1;
@@ -6077,44 +6077,56 @@ public class Pizza {
                         }
                     }
                 }
-                if (Ads_Seq.equals("GL") || Ads_Seq1.equals("GL")) {
-                    if (Pre_appOpenAd != null) {
-                        if (!isLoadingAd) {
-                            try {
-                                Pre_appOpenAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                                    @Override
-                                    public void onAdDismissedFullScreenContent() {
-                                        super.onAdDismissedFullScreenContent();
 
-                                        Log.e("onAdDismissed", "onAdDismissedFullScreenContent: ");
-                                        Pre_appOpenAd = null;
-                                        isLoadingAd = false;
-                                        Pre_Load_App_Open(cont_ads);
 
-                                    }
+                if (AppOpen_Ads_SetUp == 1) {
+                    if (Ads_Seq.equals("GL") || Ads_Seq1.equals("GL")) {
+                        if (Pre_appOpenAd != null) {
+                            if (!isLoadingAd) {
+                                try {
+                                    Pre_appOpenAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                        @Override
+                                        public void onAdDismissedFullScreenContent() {
+                                            super.onAdDismissedFullScreenContent();
 
-                                    @Override
-                                    public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
-                                        super.onAdFailedToShowFullScreenContent(adError);
+                                            Log.e("onAdDismissed", "onAdDismissedFullScreenContent: ");
+                                            Pre_appOpenAd = null;
+                                            isLoadingAd = false;
+                                            Pre_Load_App_Open(cont_ads);
 
-                                        Log.e("onAdFailedToShow", "onAdFailedToShowFullScreenContent: " + adError.getMessage());
-                                        Pre_appOpenAd = null;
-                                        isLoadingAd = false;
-                                        Pre_Load_App_Open(cont_ads);
-                                        Pre_Interstial_Show_FailToAppOpen(cont_ads);
+                                        }
 
-                                    }
+                                        @Override
+                                        public void onAdFailedToShowFullScreenContent(com.google.android.gms.ads.AdError adError) {
+                                            super.onAdFailedToShowFullScreenContent(adError);
 
-                                });
-                                Pre_appOpenAd.show(cont_ads);
-                                return;
-                            } catch (Exception e) {
+                                            Log.e("onAdFailedToShow", "onAdFailedToShowFullScreenContent: " + adError.getMessage());
+                                            Pre_appOpenAd = null;
+                                            isLoadingAd = false;
+                                            Pre_Load_App_Open(cont_ads);
+                                            Pre_Interstial_Show_FailToAppOpen(cont_ads);
+
+                                        }
+
+                                    });
+                                    Pre_appOpenAd.show(cont_ads);
+                                    return;
+                                } catch (Exception e) {
+
+                                }
 
                             }
-
                         }
                     }
+
                 }
+
+                if (AppOpen_Ads_SetUp == 2) {
+
+                    Pre_Interstial_Show(cont_ads);
+                    return;
+                }
+
 
                 if (Ads_Seq1.equals("FB")) {
                     if (FB_Inter_appopen != null) {
