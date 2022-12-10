@@ -34,7 +34,7 @@ public class MyAppPizza {
         });
 
 
-        AdSettings.setTestMode(false);
+        //AdSettings.setTestMode(false);
 
     }
 
