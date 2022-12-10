@@ -24,10 +24,18 @@
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
 
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
+            android:value="true" />
+
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
-            android:hardwareAccelerated="true"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:hardwareAccelerated="true"
             android:theme="@android:style/Theme.Translucent" />
 
         <meta-data
@@ -43,17 +51,17 @@
 
         <activity
             android:name="com.tappx.sdk.android.AdActivity"
-            android:hardwareAccelerated="true"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true" />
         <activity
             android:name="com.tappx.sdk.android.InterstitialAdActivity"
-            android:hardwareAccelerated="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true"
             android:theme="@style/Transparent" />
         <activity
             android:name="com.tappx.sdk.android.VideoAdActivity"
-            android:hardwareAccelerated="true"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true" />
     </application>
 
 

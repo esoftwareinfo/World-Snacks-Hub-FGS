@@ -892,34 +892,6 @@ public class Pizza {
                         fb_native_id_count_Pre = FB_setup_ads;
                         fb_nativesmalll_id_count_Pre = FB_setup_ads;
 
-
-                        if (Admob_App_ID.equals("ca-app-pub-3940256099942544~3347511713")) {
-                            MobileAds.initialize(mContext);
-
-                        } else {
-                            MobileAds.initialize(mContext);
-                        }
-
-                        Vungle.init(ac_App, mContext.getApplicationContext(), new InitCallback() {
-                            @Override
-                            public void onSuccess() {
-                                MyLog.e("Vungle.init onSuccess", "init");
-
-                            }
-
-                            @Override
-                            public void onError(VungleException exception) {
-
-                                MyLog.e("Vungle.init exception", "init= " + exception.toString());
-                            }
-
-                            @Override
-                            public void onAutoCacheAdAvailable(String placementId) {
-                            }
-                        });
-
-
-                        AudienceNetworkAds.initialize(mContext);
                         boolean App_Live_Or_Not = isAppLiveOnPlayStore(PackageName);
 
                         MyLog.e(PackageName, "" + App_Live_Or_Not);
@@ -1150,33 +1122,6 @@ public class Pizza {
                 Extra3 = SharePref.getExtra3(mContext);
                 Extra4 = SharePref.getExtra4(mContext);
                 Extra5 = SharePref.getExtra5(mContext);
-
-
-                if (Admob_App_ID.equals("ca-app-pub-3940256099942544~3347511713")) {
-                    MobileAds.initialize(mContext);
-                } else {
-                    MobileAds.initialize(mContext);
-                }
-
-                Vungle.init(ac_App, mContext.getApplicationContext(), new InitCallback() {
-                    @Override
-                    public void onSuccess() {
-                        MyLog.e("Vungle.init onSuccess", "init");
-
-                    }
-
-                    @Override
-                    public void onError(VungleException exception) {
-
-                        MyLog.e("Vungle.initexception", "init= " + exception.toString());
-                    }
-
-                    @Override
-                    public void onAutoCacheAdAvailable(String placementId) {
-                    }
-                });
-
-                AudienceNetworkAds.initialize(mContext);
 
                 Loading_Data = 0;
 
@@ -1603,7 +1548,7 @@ public class Pizza {
                     public void run() {
                         try {
                             if (Loading_Data == 1 || Loading_Data == 0) {
-                                //AdSettings.setTestMode(true);
+
                                 if (show_ads == 0) {
                                     try {
                                         if (builder.isShowing()) {
@@ -5749,7 +5694,7 @@ public class Pizza {
                 @Override
                 public void onClick(View v) {
                     Uri uri = Uri.parse("market://details?id="
-                            + PackageName);
+                            + mContext.getPackageName());
                     Intent goToMarket = new Intent(
                             Intent.ACTION_VIEW, uri);
 
@@ -5762,7 +5707,7 @@ public class Pizza {
                         cont_ads.startActivity(new Intent(
                                 Intent.ACTION_VIEW,
                                 Uri.parse("http://play.google.com/OneForAll/apps/details?id="
-                                        + PackageName)));
+                                        + mContext.getPackageName())));
                     }
                 }
             });
