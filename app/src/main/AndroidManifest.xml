@@ -43,25 +43,6 @@
             android:value="@integer/google_play_services_version" />
 
 
-        <receiver
-            android:name="com.tappx.sdk.android.TrackInstallReceiver"
-            android:exported="true">
-
-        </receiver>
-
-        <activity
-            android:name="com.tappx.sdk.android.AdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true" />
-        <activity
-            android:name="com.tappx.sdk.android.InterstitialAdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true"
-            android:theme="@style/Transparent" />
-        <activity
-            android:name="com.tappx.sdk.android.VideoAdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true" />
     </application>
 
 

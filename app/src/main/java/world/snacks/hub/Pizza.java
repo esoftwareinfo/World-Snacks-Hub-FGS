@@ -21,6 +21,7 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,17 +69,14 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd;
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback;
-import com.tappx.sdk.android.TappxAdError;
-import com.tappx.sdk.android.TappxBanner;
-import com.tappx.sdk.android.TappxBannerListener;
-import com.tappx.sdk.android.TappxInterstitial;
-import com.tappx.sdk.android.TappxInterstitialListener;
-import com.vungle.warren.AdConfig;
-import com.vungle.warren.InitCallback;
-import com.vungle.warren.LoadAdCallback;
-import com.vungle.warren.PlayAdCallback;
-import com.vungle.warren.Vungle;
-import com.vungle.warren.error.VungleException;
+import com.startapp.sdk.ads.banner.Banner;
+import com.startapp.sdk.ads.banner.Cover;
+import com.startapp.sdk.ads.banner.Mrec;
+import com.startapp.sdk.ads.nativead.StartAppNativeAd;
+import com.startapp.sdk.adsbase.StartAppAd;
+import com.startapp.sdk.adsbase.adlisteners.AdEventListener;
+import com.startapp.sdk.adsbase.adlisteners.VideoListener;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1195,11 +1194,7 @@ public class Pizza {
     public static String splash_anim;
 
     public static void Splesh_Screen(Context ads_context, int Text_Color, int icLauncher, String App_Name, String splesh_anim2) {
-
-
         try {
-
-
             splash_anim = splesh_anim2;
 
             if (SharePref.getFirst_ads_splesh(mContext) == 0) {
@@ -1734,8 +1729,6 @@ public class Pizza {
                             MyLog.e("splesh Load FB", "fail" + aa);
                             if (fb_splesh_inter_id_count == 6) {
                                 if (Ads_Seq1.equals("FB")) {
-
-
                                     if (Ads_Seq2.equals("OFF")) {
 
                                         try {
@@ -2552,250 +2545,105 @@ public class Pizza {
 
     public static void Splash_Interstial_AC(Dialog builder, Context cont_ads) {
 
-        try {
-            AdConfig adConfig = new AdConfig();
-            adConfig.setAdOrientation(AdConfig.AUTO_ROTATE);
-            adConfig.setMuted(false);
-
-
-            PlayAdCallback vunglePlayAdCallback = new PlayAdCallback() {
-                @Override
-                public void creativeId(String creativeId) {
-                }
-
-                @Override
-                public void onAdStart(String placementId) {
-                }
-
-                @Override
-                public void onAdEnd(String placementId, boolean completed, boolean isCTAClicked) {
-                }
-
-                @Override
-                public void onAdEnd(String placementId) {
-
-                }
-
-                @Override
-                public void onAdClick(String placementId) {
-                }
-
-                @Override
-                public void onAdRewarded(String placementId) {
-                }
-
-                @Override
-                public void onAdLeftApplication(String placementId) {
-                }
-
-                @Override
-                public void onError(String placementId, VungleException exception) {
-
-                }
-
-                @Override
-                public void onAdViewed(String placementId) {
-                }
-            };
-
-
-            Vungle.loadAd(ac_Inter, new LoadAdCallback() {
-                @Override
-                public void onAdLoad(String placementReferenceId) {
-
-
-                    try {
-                        handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
-
-                    } catch (Exception e) {
-                    }
-
-                    try {
-
-
-                        if (Splesh_Timer) {
-
-                        } else {
-
-                            try {
-                                if (Vungle.canPlayAd(ac_Inter)) {
-                                    Vungle.playAd(ac_Inter, adConfig, vunglePlayAdCallback);
-                                }
-                            } catch (Exception e) {
-
-                            }
-                            try {
-                                if (!only_inter) {
-                                    Interstial_Load(cont_ads);
-                                    Pre_Load_App_Open(cont_ads);
-                                }
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            if (builder != null) {
-                                                if (builder.isShowing()) {
-                                                    builder.dismiss();
-                                                }
-                                            }
-                                        } catch (final IllegalArgumentException e) {
-
-                                        } catch (final Exception e) {
-                                        } finally {
-
-                                        }
-                                    }
-                                }, 500);
-                            } catch (Exception e) {
-
-                            }
-                        }
-
-                    } catch (Exception e) {
-
-                    }
-
-                }
-
-                @Override
-                public void onError(String placementReferenceId, VungleException exception) {
-
-                    MyLog.e(" Vungle s i onError", "" + exception.getMessage());
-
-
-                    Splash_Interstial_Tappx(builder, cont_ads);
-
-
-                }
-            });
-
-        } catch (Exception e) {
-
-        }
-
+        Splash_Interstial_Tappx(builder, cont_ads);
 
     }
 
     public static void Splash_Interstial_Tappx(final Dialog builder, final Context cont_ads) {
 
 
+        if (Ads_Seq.equals("TX")) {
+
+
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+                        if (Splesh_Timer) {
+
+                        } else {
+                            StartAppAd.showAd(cont_ads);
+                        }
+                    } catch (Exception e) {
+
+                    }
+
+                    try {
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (builder != null) {
+                                        if (builder.isShowing()) {
+                                            builder.dismiss();
+                                        }
+                                    }
+                                } catch (final IllegalArgumentException e) {
+
+                                } catch (final Exception e) {
+                                } finally {
+
+                                }
+                            }
+                        }, 500);
+                    } catch (Exception e) {
+
+                    }
+                    if (!only_inter) {
+                        Interstial_Load(cont_ads);
+                        Pre_Load_App_Open(cont_ads);
+                    }
+
+
+                }
+            }, 2000);
+
+            return;
+        }
+
+
         try {
+            handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
+            if (Splesh_Timer) {
 
-            TappxInterstitial tappxInterstitial;
-            tappxInterstitial = new TappxInterstitial(cont_ads,
-                    Tappx_ID);
-            tappxInterstitial.loadAd();
-            tappxInterstitial
-                    .setListener(new TappxInterstitialListener() {
-                        @Override
-                        public void onInterstitialLoaded(
-                                TappxInterstitial tappxInterstitial) {
-
-                            try {
-                                handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
-                                if (Splesh_Timer) {
-
-                                } else {
-                                    tappxInterstitial.show();
-
-
-                                }
-
-
-                            } catch (Exception e) {
-
-                            }
-
-                            try {
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            if (builder != null) {
-                                                if (builder.isShowing()) {
-                                                    builder.dismiss();
-                                                }
-                                            }
-                                        } catch (final IllegalArgumentException e) {
-
-                                        } catch (final Exception e) {
-                                        } finally {
-
-                                        }
-                                    }
-                                }, 500);
-                            } catch (Exception e) {
-
-                            }
-
-                        }
-
-                        @Override
-                        public void onInterstitialLoadFailed(
-                                TappxInterstitial tappxInterstitial,
-                                TappxAdError tappxAdError) {
-
-
-                            handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
-
-                            if (!only_inter) {
-                                Interstial_Load(cont_ads);
-                                Pre_Load_App_Open(cont_ads);
-                            }
-
-                            Handler handler = new Handler(Looper.getMainLooper());
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-
-
-                                    try {
-                                        if (builder != null) {
-                                            if (builder.isShowing()) {
-                                                builder.dismiss();
-                                            }
-                                        }
-                                    } catch (final IllegalArgumentException e) {
-
-                                    } catch (final Exception e) {
-                                    } finally {
-
-                                    }
-                                }
-                            }, 500);
-
-
-                        }
-
-                        @Override
-                        public void onInterstitialClicked(
-                                TappxInterstitial arg0) {
-
-                        }
-
-                        @Override
-                        public void onInterstitialDismissed(
-                                TappxInterstitial arg0) {
-                            if (!only_inter) {
-                                Interstial_Load(cont_ads);
-                                Pre_Load_App_Open(cont_ads);
-                            }
-                        }
-
-                        @Override
-                        public void onInterstitialShown(
-                                TappxInterstitial arg0) {
-
-
-                        }
-
-                    });
-
+            } else {
+                StartAppAd.showAd(cont_ads);
+            }
         } catch (Exception e) {
 
         }
+
+        try {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (builder != null) {
+                            if (builder.isShowing()) {
+                                builder.dismiss();
+                            }
+                        }
+                    } catch (final IllegalArgumentException e) {
+
+                    } catch (final Exception e) {
+                    } finally {
+
+                    }
+                }
+            }, 500);
+        } catch (Exception e) {
+
+        }
+        if (!only_inter) {
+            Interstial_Load(cont_ads);
+            Pre_Load_App_Open(cont_ads);
+        }
+
+
     }
 
 
@@ -3403,356 +3251,13 @@ public class Pizza {
     }
 
     public static void Interstial_Show_AC(Context cont_ads) {
-
-        try {
-            if (!isNetworkConnected(cont_ads)) {
-                return;
-            }
-
-
-            CustomProgressDialogue ac_dialog111 = new CustomProgressDialogue(cont_ads, "Ad", "Please wait Ads is loading...");
-
-            ac_dialog111.show();
-
-
-            AdConfig adConfig = new AdConfig();
-            adConfig.setAdOrientation(AdConfig.AUTO_ROTATE);
-            adConfig.setMuted(false);
-
-
-            PlayAdCallback vunglePlayAdCallback = new PlayAdCallback() {
-                @Override
-                public void creativeId(String creativeId) {
-                }
-
-                @Override
-                public void onAdStart(String placementId) {
-                }
-
-                @Override
-                public void onAdEnd(String placementId, boolean completed, boolean isCTAClicked) {
-                }
-
-                @Override
-                public void onAdEnd(String placementId) {
-
-                }
-
-                @Override
-                public void onAdClick(String placementId) {
-                }
-
-                @Override
-                public void onAdRewarded(String placementId) {
-                }
-
-                @Override
-                public void onAdLeftApplication(String placementId) {
-                }
-
-                @Override
-                public void onError(String placementId, VungleException exception) {
-                    try {
-
-                        try {
-                            if (ac_dialog111 != null) {
-                                if (ac_dialog111.isShowing()) {
-                                    ac_dialog111.dismiss();
-
-                                }
-                            }
-                        } catch (final IllegalArgumentException e) {
-
-                        } catch (final Exception e) {
-                        } finally {
-
-                        }
-
-
-                    } catch (Exception e) {
-
-                    }
-                }
-
-                @Override
-                public void onAdViewed(String placementId) {
-                }
-            };
-
-
-            Vungle.loadAd(ac_Inter, new LoadAdCallback() {
-                @Override
-                public void onAdLoad(String placementReferenceId) {
-
-
-                    try {
-                        handler_splesh_counter.removeCallbacks(runnable_splesh_counter);
-
-                    } catch (Exception e) {
-                    }
-
-                    try {
-
-
-                        try {
-                            if (Vungle.canPlayAd(ac_Inter)) {
-                                Vungle.playAd(ac_Inter, adConfig, vunglePlayAdCallback);
-                            }
-                        } catch (Exception e) {
-
-                        }
-                        try {
-
-                            Handler handler = new Handler(Looper.getMainLooper());
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    try {
-                                        if (ac_dialog111 != null) {
-                                            if (ac_dialog111.isShowing()) {
-                                                ac_dialog111.dismiss();
-
-                                            }
-                                        }
-                                    } catch (final IllegalArgumentException e) {
-
-                                    } catch (final Exception e) {
-                                    } finally {
-
-                                    }
-
-
-                                }
-                            }, 500);
-                        } catch (Exception e) {
-
-                        }
-
-
-                    } catch (Exception e) {
-
-                    }
-
-                }
-
-                @Override
-                public void onError(String placementReferenceId, VungleException exception) {
-
-                    Interstial_Show_Tappx_After_AC(cont_ads, ac_dialog111);
-                }
-            });
-
-        } catch (Exception e) {
-
-        }
+        Interstial_Show_Tappx(cont_ads);
     }
 
     public static void Interstial_Show_Tappx(Context cont_ads) {
-        try {
-
-            if (!isNetworkConnected(cont_ads)) {
-                return;
-            }
-
-            CustomProgressDialogue tx_dialog = new CustomProgressDialogue(cont_ads, "Ad", "Please wait Ads is loading...");
-
-            tx_dialog.show();
-
-            TappxInterstitial tappxInterstitial;
-            tappxInterstitial = new TappxInterstitial(cont_ads,
-                    Tappx_ID);
-            tappxInterstitial.loadAd();
-            tappxInterstitial
-                    .setListener(new TappxInterstitialListener() {
-                        @Override
-                        public void onInterstitialLoaded(
-                                TappxInterstitial tappxInterstitial) {
-
-                            try {
-                                tappxInterstitial.show();
-                            } catch (Exception e) {
-
-                            }
-
-                            try {
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        try {
-                                            if (tx_dialog != null) {
-                                                if (tx_dialog.isShowing()) {
-                                                    tx_dialog.dismiss();
-                                                }
-                                            }
-                                        } catch (final IllegalArgumentException e) {
-
-                                        } catch (final Exception e) {
-                                        } finally {
-
-                                        }
-                                    }
-                                }, 500);
-                            } catch (Exception e) {
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onInterstitialLoadFailed(
-                                TappxInterstitial tappxInterstitial,
-                                TappxAdError tappxAdError) {
-
-                            Handler handler = new Handler(Looper.getMainLooper());
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    try {
-                                        if (tx_dialog != null) {
-                                            if (tx_dialog.isShowing()) {
-                                                tx_dialog.dismiss();
-                                            }
-                                        }
-                                    } catch (final IllegalArgumentException e) {
-
-                                    } catch (final Exception e) {
-                                    } finally {
-
-                                    }
-
-                                }
-                            }, 500);
-
-
-                        }
-
-                        @Override
-                        public void onInterstitialClicked(
-                                TappxInterstitial arg0) {
-
-                        }
-
-                        @Override
-                        public void onInterstitialDismissed(
-                                TappxInterstitial arg0) {
-                        }
-
-                        @Override
-                        public void onInterstitialShown(
-                                TappxInterstitial arg0) {
-
-
-                        }
-
-                    });
-        } catch (Exception e) {
-
-        }
+        StartAppAd.showAd(cont_ads);
     }
 
-    public static void Interstial_Show_Tappx_After_AC(Context cont_ads, CustomProgressDialogue ac_dialog111) {
-
-        try {
-            TappxInterstitial tappxInterstitial;
-            tappxInterstitial = new TappxInterstitial(cont_ads,
-                    Tappx_ID);
-            tappxInterstitial.loadAd();
-            tappxInterstitial
-                    .setListener(new TappxInterstitialListener() {
-                        @Override
-                        public void onInterstitialLoaded(
-                                TappxInterstitial tappxInterstitial) {
-                            try {
-                                tappxInterstitial.show();
-
-                            } catch (Exception e) {
-
-                            }
-                            try {
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        try {
-                                            if (ac_dialog111 != null) {
-                                                if (ac_dialog111.isShowing()) {
-                                                    ac_dialog111.dismiss();
-                                                }
-                                            }
-                                        } catch (final IllegalArgumentException e) {
-
-                                        } catch (final Exception e) {
-                                        } finally {
-
-                                        }
-                                    }
-                                }, 500);
-
-                            } catch (Exception e) {
-
-                            }
-                        }
-
-                        @Override
-                        public void onInterstitialLoadFailed(
-                                TappxInterstitial tappxInterstitial,
-                                TappxAdError tappxAdError) {
-                            try {
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-
-                                        try {
-                                            if (ac_dialog111 != null) {
-                                                if (ac_dialog111.isShowing()) {
-                                                    ac_dialog111.dismiss();
-                                                }
-                                            }
-                                        } catch (final IllegalArgumentException e) {
-
-                                        } catch (final Exception e) {
-                                        } finally {
-
-                                        }
-
-
-                                    }
-                                }, 1000);
-                            } catch (Exception e) {
-
-                            }
-                        }
-
-                        @Override
-                        public void onInterstitialClicked(
-                                TappxInterstitial arg0) {
-
-                        }
-
-                        @Override
-                        public void onInterstitialDismissed(
-                                TappxInterstitial arg0) {
-                        }
-
-                        @Override
-                        public void onInterstitialShown(
-                                TappxInterstitial arg0) {
-
-                        }
-                    });
-
-        } catch (Exception e) {
-
-        }
-    }
 
     // Banner
 
@@ -4090,74 +3595,25 @@ public class Pizza {
 
     void Banner_Tappx(Context cont_ads, RelativeLayout adView, int bannerType) {
 
-        try {
-            TappxBanner.AdSize Banner_Type_Size_Tappx = null;
-            TappxBanner Tappxbanner;
-            if (bannerType == 1) {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.SMART_BANNER;
-            } else if (bannerType == 2) {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.SMART_BANNER;
-            } else if (bannerType == 3) {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.BANNER_300x250;
-            } else {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.SMART_BANNER;
+        if (bannerType == 3) {
+            try {
+                Mrec startAppMrec = new Mrec(cont_ads);
+                adView.setVisibility(View.VISIBLE);
+                adView.removeAllViews();
+                adView.addView(startAppMrec);
+            } catch (Exception e) {
+
             }
-            Tappxbanner = new TappxBanner(cont_ads, Tappx_ID);
-            Tappxbanner.setAdSize(Banner_Type_Size_Tappx);
-            Tappxbanner.loadAd();
-            Tappxbanner.setRefreshTimeSeconds(45);
-
-            Tappxbanner.setListener(new TappxBannerListener() {
-                @Override
-                public void onBannerLoaded(
-                        TappxBanner tappxBanner) {
-                    MyLog.e("TX b Native Load", "yes");
-                    try {
-                        if (exit_gifImageView != null) {
-                            exit_gifImageView.setVisibility(View.GONE);
-                        }
-                    } catch (Exception e) {
-
-                    }
-
-                    try {
-                        adView.removeAllViews();
-                        adView.setVisibility(View.VISIBLE);
-                        adView.addView(Tappxbanner);
-                    } catch (Exception E) {
-
-                    }
-
-                }
-
-                @Override
-                public void onBannerLoadFailed(
-                        TappxBanner tappxBanner,
-                        TappxAdError tappxAdError) {
-
-                    MyLog.e("TX b Native Load", "fail");
-                    adView.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onBannerClicked(
-                        TappxBanner tappxBanner) {
-                }
-
-                @Override
-                public void onBannerExpanded(
-                        TappxBanner tappxBanner) {
-                }
-
-                @Override
-                public void onBannerCollapsed(
-                        TappxBanner tappxBanner) {
-                }
-            });
-
-        } catch (Exception e) {
-
+        } else {
+            try {
+                Banner startAppBanner = new Banner(cont_ads);
+                adView.setVisibility(View.VISIBLE);
+                adView.removeAllViews();
+                adView.addView(startAppBanner);
+            } catch (Exception e) {
+            }
         }
+
     }
 
     // Native
@@ -4282,16 +3738,16 @@ public class Pizza {
                                 if (Ads_Seq2.equals("OFF")) {
 
                                 } else if (Ads_Seq2.equals("AC")) {
-                                    Banner_AC(cont_ads, adView, 3);
+                                    Native_SA(cont_ads, adView, nativeType);
                                 } else {
-                                    Banner_Tappx(cont_ads, adView, 3);
+                                    Native_SA(cont_ads, adView, nativeType);
                                 }
                             } else if (Ads_Seq1.equals("GL")) {
                                 Native_Google(cont_ads, adView, nativeType);
                             } else if (Ads_Seq1.equals("AC")) {
-                                Banner_AC(cont_ads, adView, 3);
+                                Native_SA(cont_ads, adView, nativeType);
                             } else if (Ads_Seq1.equals("TX")) {
-                                Banner_Tappx(cont_ads, adView, 3);
+                                Native_SA(cont_ads, adView, nativeType);
                             } else if (Ads_Seq1.equals("OFF")) {
 
                             } else {
@@ -4408,16 +3864,16 @@ public class Pizza {
                                 if (Ads_Seq2.equals("OFF")) {
 
                                 } else if (Ads_Seq2.equals("AC")) {
-                                    Banner_AC(cont_ads, adView, 1);
+                                    Native_SA(cont_ads, adView, nativeType);
                                 } else {
-                                    Banner_Tappx(cont_ads, adView, 1);
+                                    Native_SA(cont_ads, adView, nativeType);
                                 }
                             } else if (Ads_Seq1.equals("GL")) {
                                 Native_Google(cont_ads, adView, nativeType);
                             } else if (Ads_Seq1.equals("AC")) {
-                                Banner_AC(cont_ads, adView, 1);
+                                Native_SA(cont_ads, adView, nativeType);
                             } else if (Ads_Seq1.equals("TX")) {
-                                Banner_Tappx(cont_ads, adView, 1);
+                                Native_SA(cont_ads, adView, nativeType);
 
                             } else if (Ads_Seq1.equals("OFF")) {
 
@@ -4663,6 +4119,28 @@ public class Pizza {
 
     }
 
+    public void Native_SA(Context cont_ads, RelativeLayout adView, int nativeType) {
+
+        if (nativeType == 2) {
+            try {
+                Cover converrr = new Cover(cont_ads);
+                adView.setVisibility(View.VISIBLE);
+                adView.removeAllViews();
+                adView.addView(converrr);
+            } catch (Exception e) {
+
+            }
+        } else {
+            try {
+                Banner startAppBanner = new Banner(cont_ads);
+                adView.setVisibility(View.VISIBLE);
+                adView.removeAllViews();
+                adView.addView(startAppBanner);
+            } catch (Exception e) {
+            }
+        }
+
+    }
 
     // Pre Load Banner
 
@@ -4764,29 +4242,47 @@ public class Pizza {
                 }
             }
 
+            if (Pre_Loaed_Banner_Type == 3) {
+                try {
+                    Mrec startAppMrec = new Mrec(cont_ads);
+                    adView.setVisibility(View.VISIBLE);
+                    adView.removeAllViews();
+                    adView.addView(startAppMrec);
+                } catch (Exception e) {
 
-            if (Pre_Loaed_Banner_What_show.equals("TX_Banner")) {
-                if (Tappxbanner_pre != null) {
-
-                    try {
-                        adView.setVisibility(View.VISIBLE);
-                        adView.removeAllViews();
-                        adView.addView(Tappxbanner_pre);
-                        Pre_Loaed_Banner_What_show = "";
-                        Banner_Pre_Load(cont_ads, Pre_Loaed_Banner_Type);
-                        return;
-                    } catch (Exception E) {
-
-                    }
-
+                }
+            } else {
+                try {
+                    Banner startAppBanner = new Banner(cont_ads);
+                    adView.setVisibility(View.VISIBLE);
+                    adView.removeAllViews();
+                    adView.addView(startAppBanner);
+                } catch (Exception e) {
                 }
             }
 
-            if (Ads_Seq2.equals("AC")) {
-                Banner_AC(cont_ads, adView, Pre_Loaed_Banner_Type);
+            if (Pre_Loaed_Banner_Type == 2) {
+                try {
+                    Cover converrr = new Cover(cont_ads);
+                    adView.setVisibility(View.VISIBLE);
+                    adView.removeAllViews();
+                    adView.addView(converrr);
+                } catch (Exception e) {
+
+                }
             } else {
-                Banner_Tappx(cont_ads, adView, Pre_Loaed_Banner_Type);
+                try {
+                    Banner startAppBanner = new Banner(cont_ads);
+                    adView.setVisibility(View.VISIBLE);
+                    adView.removeAllViews();
+                    adView.addView(startAppBanner);
+                } catch (Exception e) {
+                }
             }
+
+
+            Pre_Loaed_Banner_What_show = "";
+
 
         } catch (Exception e) {
 
@@ -5030,65 +4526,7 @@ public class Pizza {
         }
     }
 
-    TappxBanner Tappxbanner_pre;
-
     public void Pre_Banner_Tappx(Context cont_ads, int bannerType) {
-
-
-        try {
-            MyLog.e("Pre_Banner_Tappx", "Pre_Banner_Tappx");
-
-            TappxBanner.AdSize Banner_Type_Size_Tappx;
-
-            if (bannerType == 1) {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.SMART_BANNER;
-            } else if (bannerType == 2) {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.BANNER_300x250;
-            } else if (bannerType == 3) {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.BANNER_300x250;
-            } else {
-                Banner_Type_Size_Tappx = TappxBanner.AdSize.SMART_BANNER;
-            }
-            Tappxbanner_pre = new TappxBanner(cont_ads, Tappx_ID);
-            Tappxbanner_pre.setAdSize(Banner_Type_Size_Tappx);
-            Tappxbanner_pre.loadAd();
-            Tappxbanner_pre.setRefreshTimeSeconds(45);
-
-            Tappxbanner_pre.setListener(new TappxBannerListener() {
-                @Override
-                public void onBannerLoaded(
-                        TappxBanner tappxBanner) {
-                    Pre_Loaed_Banner_What_show = "TX_Banner";
-                }
-
-                @Override
-                public void onBannerLoadFailed(
-                        TappxBanner tappxBanner,
-                        TappxAdError tappxAdError) {
-                    Tappxbanner_pre = null;
-                    Pre_Loaed_Banner_What_show = "";
-//                Banner_Pre_Load(cont_ads, bannerType);
-                }
-
-                @Override
-                public void onBannerClicked(
-                        TappxBanner tappxBanner) {
-                }
-
-                @Override
-                public void onBannerExpanded(
-                        TappxBanner tappxBanner) {
-                }
-
-                @Override
-                public void onBannerCollapsed(
-                        TappxBanner tappxBanner) {
-                }
-            });
-
-        } catch (Exception e) {
-
-        }
 
     }
 
@@ -5216,37 +4654,9 @@ public class Pizza {
                 }
             }
 
-            if (Pre_Loaed_Banner_What_show.equals("TX_Banner")) {
-                if (Tappxbanner_pre != null) {
 
-                    try {
-                        adView.setVisibility(View.VISIBLE);
-                        adView.removeAllViews();
-                        adView.addView(Tappxbanner_pre);
-                        Pre_Loaed_Banner_What_show = "";
-                        Native_Pre_Load(cont_ads, Pre_Loaed_Native_Type);
-                        return;
-                    } catch (Exception E) {
+            Pre_Loaed_Banner_What_show = "";
 
-                    }
-
-                }
-            }
-
-
-            if (Ads_Seq2.equals("AC")) {
-                if (Pre_Loaed_Native_Type == 2) {
-                    Banner_AC(cont_ads, adView, 3);
-                } else {
-                    Banner_AC(cont_ads, adView, 1);
-                }
-            } else {
-                if (Pre_Loaed_Native_Type == 2) {
-                    Banner_Tappx(cont_ads, adView, 3);
-                } else {
-                    Banner_Tappx(cont_ads, adView, 1);
-                }
-            }
 
         } catch (Exception e) {
 
@@ -6761,212 +6171,39 @@ public class Pizza {
 
     public void Reward_AC(Activity cont_ads, OnRewardgetListner onRewardgetListner) {
 
+        Reward_Tappx(cont_ads, onRewardgetListner);
 
-        try {
-            MyLog.e("Reward_AC", "Reward_AC");
-
-            if (Ads_Seq.equals("AC") || Ads_Seq1.equals("AC") || Ads_Seq2.equals("AC")) {
-
-            } else {
-                Reward_Tappx(cont_ads, onRewardgetListner);
-
-                return;
-
-            }
-
-
-            AdConfig adConfig = new AdConfig();
-            adConfig.setAdOrientation(AdConfig.AUTO_ROTATE);
-            adConfig.setMuted(false);
-
-
-            PlayAdCallback vunglePlayAdCallback = new PlayAdCallback() {
-                @Override
-                public void creativeId(String creativeId) {
-                }
-
-                @Override
-                public void onAdStart(String placementId) {
-                }
-
-                @Override
-                public void onAdEnd(String placementId, boolean completed, boolean isCTAClicked) {
-                }
-
-                @Override
-                public void onAdEnd(String placementId) {
-
-                }
-
-                @Override
-                public void onAdClick(String placementId) {
-                }
-
-                @Override
-                public void onAdRewarded(String placementId) {
-                }
-
-                @Override
-                public void onAdLeftApplication(String placementId) {
-                }
-
-                @Override
-                public void onError(String placementId, VungleException exception) {
-
-                }
-
-                @Override
-                public void onAdViewed(String placementId) {
-                }
-            };
-
-
-            Vungle.loadAd(ac_Inter, new LoadAdCallback() {
-                @Override
-                public void onAdLoad(String placementReferenceId) {
-
-                    Log.e("Vungle rw", "yes");
-
-                    onRewardgetListner.OnReward(true);
-
-                    try {
-                        if (Vungle.canPlayAd(ac_Inter)) {
-                            Vungle.playAd(ac_Inter, adConfig, vunglePlayAdCallback);
-                        }
-                    } catch (Exception e) {
-
-                    }
-
-
-                    try {
-
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                try {
-                                    if (Rewarded_progressDialog.isShowing()) {
-                                        Rewarded_progressDialog.dismiss();
-
-                                    }
-                                } catch (final IllegalArgumentException e) {
-
-                                } catch (final Exception e) {
-                                } finally {
-
-                                }
-                            }
-                        }, 1000);
-
-                    } catch (Exception e) {
-
-                    }
-
-
-                }
-
-                @Override
-                public void onError(String placementReferenceId, VungleException exception) {
-                    Log.e("Vungle rw", "fail=" + exception.toString());
-
-
-                    Reward_Tappx(cont_ads, onRewardgetListner);
-                }
-            });
-        } catch (Exception e) {
-
-        }
 
     }
 
     public void Reward_Tappx(Activity cont_ads, OnRewardgetListner onRewardgetListner) {
 
+        StartAppAd rewardedVideo = new StartAppAd(cont_ads);
 
-        try {
-            MyLog.e("Reward_Tappx", "Reward_Tappx");
-            TappxInterstitial tappxInterstitial;
-            tappxInterstitial = new TappxInterstitial(cont_ads,
-                    Tappx_ID);
-            tappxInterstitial.loadAd();
-            tappxInterstitial
-                    .setListener(new TappxInterstitialListener() {
+        rewardedVideo.setVideoListener(new VideoListener() {
+            @Override
+            public void onVideoCompleted() {
+                onRewardgetListner.OnReward(true);
+                Toast.makeText(cont_ads.getApplicationContext(), "Grant the reward to user", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        rewardedVideo.loadAd(StartAppAd.AdMode.REWARDED_VIDEO, new AdEventListener() {
+            @Override
+            public void onReceiveAd(@NonNull com.startapp.sdk.adsbase.Ad ad) {
+                rewardedVideo.showAd();
+
+                try {
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
                         @Override
-                        public void onInterstitialLoaded(
-                                TappxInterstitial tappxInterstitial) {
-
+                        public void run() {
 
                             try {
+                                if (Rewarded_progressDialog.isShowing()) {
+                                    Rewarded_progressDialog.dismiss();
 
-                                tappxInterstitial.show();
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        try {
-                                            if (Rewarded_progressDialog != null) {
-                                                if (Rewarded_progressDialog.isShowing()) {
-                                                    Rewarded_progressDialog.dismiss();
-                                                }
-                                            }
-                                        } catch (final IllegalArgumentException e) {
-
-                                        } catch (final Exception e) {
-                                        } finally {
-
-                                        }
-                                    }
-                                }, 500);
-                            } catch (Exception e) {
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onInterstitialLoadFailed(
-                                TappxInterstitial tappxInterstitial,
-                                TappxAdError tappxAdError) {
-                            onRewardgetListner.OnReward(true);
-
-
-                            try {
-                                if (Rewarded_progressDialog != null) {
-                                    if (Rewarded_progressDialog.isShowing()) {
-                                        Rewarded_progressDialog.dismiss();
-
-                                    }
-                                }
-                            } catch (final IllegalArgumentException e) {
-
-                            } catch (final Exception e) {
-                            } finally {
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onInterstitialClicked(
-                                TappxInterstitial arg0) {
-
-                        }
-
-                        @Override
-                        public void onInterstitialDismissed(
-                                TappxInterstitial arg0) {
-
-                            onRewardgetListner.OnReward(true);
-
-                            try {
-                                if (Rewarded_progressDialog != null) {
-                                    if (Rewarded_progressDialog.isShowing()) {
-                                        Rewarded_progressDialog.dismiss();
-
-                                    }
                                 }
                             } catch (final IllegalArgumentException e) {
 
@@ -6975,18 +6212,41 @@ public class Pizza {
 
                             }
                         }
+                    }, 1000);
 
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailedToReceiveAd(@Nullable com.startapp.sdk.adsbase.Ad ad) {
+                onRewardgetListner.OnReward(true);
+                try {
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
                         @Override
-                        public void onInterstitialShown(
-                                TappxInterstitial arg0) {
+                        public void run() {
 
+                            try {
+                                if (Rewarded_progressDialog.isShowing()) {
+                                    Rewarded_progressDialog.dismiss();
 
+                                }
+                            } catch (final IllegalArgumentException e) {
+
+                            } catch (final Exception e) {
+                            } finally {
+
+                            }
                         }
+                    }, 1000);
 
-                    });
+                } catch (Exception e) {
 
-        } catch (Exception e) {
-
-        }
+                }
+            }
+        });
     }
 }
