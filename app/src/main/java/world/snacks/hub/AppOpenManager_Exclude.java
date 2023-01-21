@@ -18,7 +18,6 @@ public class AppOpenManager_Exclude implements Application.ActivityLifecycleCall
     private Activity currentActivity;
     private static boolean isShowingAd = false;
     String App_Open_ID = "";
-    int Check = 1;
     private final Application myApplication;
     String AC1 = "", AC2 = "", AC3 = "", AC4 = "", AC5 = "";
 
@@ -39,13 +38,7 @@ public class AppOpenManager_Exclude implements Application.ActivityLifecycleCall
 
     public void showAdIfAvailable() {
 
-        if(Check == 0){
-
-            Pizza.AppOpen_Show(currentActivity);
-        }else{
-            Check = 0;
-
-        }
+        Pizza.AppOpen_Show(currentActivity);
 
     }
 
@@ -53,9 +46,10 @@ public class AppOpenManager_Exclude implements Application.ActivityLifecycleCall
     public void onStart() {
 
 
-        Log.e("onStart","onStart");
+        Log.e("onStart", "onStart");
 
-
+        Log.e("onStart", "" + currentActivity.getLocalClassName());
+        Log.e("onStart", "" + AC1);
         if ((currentActivity.getLocalClassName()).equals(AC1) ||
                 (currentActivity.getLocalClassName()).equals(AC2) ||
                 (currentActivity.getLocalClassName()).equals(AC3) ||
@@ -65,7 +59,7 @@ public class AppOpenManager_Exclude implements Application.ActivityLifecycleCall
 
         } else {
 
-                showAdIfAvailable();
+            showAdIfAvailable();
 
 
         }

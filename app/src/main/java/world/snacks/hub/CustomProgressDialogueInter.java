@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 
 public class CustomProgressDialogueInter extends Dialog {
-    public CustomProgressDialogueInter(Context context, String title, String description,int bg_color,int text_color) {
+    public CustomProgressDialogueInter(Context context, String title, String description, int bg_color, int text_color) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
 
 
@@ -34,7 +34,7 @@ public class CustomProgressDialogueInter extends Dialog {
 
         setContentView(view);
 
-        TextView title_view,message_view;
+        TextView title_view, message_view;
         title_view = view.findViewById(R.id.title);
         title_view.setText("" + title);
 
@@ -48,10 +48,6 @@ public class CustomProgressDialogueInter extends Dialog {
         mainrl.setBackgroundColor(bg_color);
         title_view.setTextColor(text_color);
         message_view.setTextColor(text_color);
-
-
-
-
 
 
     }

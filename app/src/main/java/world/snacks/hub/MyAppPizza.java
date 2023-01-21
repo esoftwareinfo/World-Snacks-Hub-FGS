@@ -1,6 +1,5 @@
 package world.snacks.hub;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.facebook.ads.AdSettings;
@@ -13,11 +12,12 @@ import com.startapp.sdk.adsbase.StartAppSDK;
 public class MyAppPizza {
 
 
-    public static void initialize_ads(Context app_context, String vungle_app_id, String start_app_id){
+    public static void initialize_ads(Context app_context, String vungle_app_id, String start_app_id) {
         MobileAds.initialize(app_context);
         AudienceNetworkAds.initialize(app_context);
         StartAppSDK.init(app_context, start_app_id, false);
         StartAppAd.disableSplash();
+        //AdSettings.setTestMode(true);
     }
 
 
